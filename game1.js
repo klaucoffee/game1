@@ -1,22 +1,14 @@
 kaboom({
     global: true,
     fullscreen: true,
-    scale: 1,
+    scale: 2,
     debug: true,
-    clearColor: rgb(0, 0, 1)
+    clearColor: [0, 0, 1, 1],
 })
 
-loadroot('https://imgur.com/')
-loadSprite('doggo', 'Xl68unC.jpg')
-
-
-screen("game", () => {
+scene("game", ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
-
-
-
-
-
 })
+
 
 start("game")
