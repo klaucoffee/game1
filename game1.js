@@ -96,3 +96,6 @@ scene("game", () => {
 
 
 start("game")
+
+//to continue
+//consider having pictures zoom past. add double jump
