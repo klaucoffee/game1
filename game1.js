@@ -22,6 +22,8 @@ loadSprite('wall', 'UujO9Sp.png')
 loadSprite('gold', 'P0dL3BH.png')
 loadSprite('evil', 'qVMNAmN.png')
 loadSprite('me', 'c19OsFc.png.png')
+loadSprite('arrow-down', 'laOEupO.png')
+
 
 
 scene("game", () => {
@@ -29,26 +31,27 @@ scene("game", () => {
 
     const map = [
 
-        '$                           $',
-        '$    @@@@+@@@#@@@@@         $',
-        '$                           $',
-        '$                           $',
-        '$ @@@@@!@@@@@              $',
-        '$                           $',
-        '$                           $',
-        '$        @@?@@@&@@@@        $',
-        '$                           $',
-        '$         ^              ^  $',
-        '==================    ========',
+        '$                     $',
+        '$    @@@+@@@#@@@      $',
+        '$                     $',
+        '$                     $',
+        '$ @@@@@!@@@           $',
+        '$                     $',
+        '$                     $',
+        '$     @@?@@@&@@       $',
+        '$                     $',
+        '$     ^            ^  $',
+        '==============(========',
     ]
 
     const levelCfg = {
         width: 100,
         height: 100,
-        '=': [sprite('floor', solid())],
-        '@': [sprite('brick', solid())],
-        '$': [sprite('wall', solid())],
-        '^': [sprite('evil', solid())],
+        '=': [sprite('floor'), solid()],
+        '@': [sprite('brick'), solid()],
+        '$': [sprite('wall'), solid()],
+        '^': [sprite('evil'), solid()],
+        '(': [sprite('arrow-down'), solid()],
         '!': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
         '?': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
         '#': [sprite(choose(['fall2', 'date2', 'tie2', 'novel2']))],
