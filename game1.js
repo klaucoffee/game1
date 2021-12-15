@@ -1,7 +1,7 @@
 kaboom({
     global: true,
     fullscreen: true,
-    scale: 1,
+    scale: 0.8,
     debug: true,
     clearColor: [0, 0, 0, 1],
 })
@@ -31,16 +31,16 @@ scene("game", () => {
 
     const map = [
 
-        '$                     $',
-        '$    @@@+@@@#@@@      $',
-        '$                     $',
-        '$                     $',
-        '$ @@@@@!@@@           $',
-        '$                     $',
-        '$                     $',
-        '$     @@?@@@&@@       $',
-        '$                     $',
-        '$     ^            ^  $',
+        '                     $',
+        '   @@@+@@@#@@@       $',
+        '                     $',
+        '                     $',
+        '             @!@@@   $',
+        '                     $',
+        '                     $',
+        '     @@?@@@&@@       $',
+        '                     $',
+        '     ^            ^  $',
         '==============(========',
     ]
 
@@ -50,8 +50,9 @@ scene("game", () => {
         '=': [sprite('floor'), solid()],
         '@': [sprite('brick'), solid()],
         '$': [sprite('wall'), solid()],
-        '^': [sprite('evil'), solid()],
+        '^': [sprite('evil'), solid(), scale(1.5)],
         '(': [sprite('arrow-down'), solid()],
+        '[': [sprite('gold')],
         '!': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
         '?': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
         '#': [sprite(choose(['fall2', 'date2', 'tie2', 'novel2']))],
@@ -60,6 +61,36 @@ scene("game", () => {
     }
 
     const gameLevel = addLevel(map, levelCfg)
+
+    const scoreLabel = add([
+        text('test'),
+        scale(5),
+        pos(2300, 400),
+        layer('ui'),
+        {
+            value: 'test',
+        }
+    ])
+
+    const word = add([
+        text('WORD:' + choose(['TIE', 'DATE', 'FALL', 'NOVEL'])),
+        scale(10),
+        pos(200, 1300),
+        layer('ui'),
+        {
+            value: 'test',
+        }
+    ])
+
+    add([text('level ' + 'test'), pos(2300, 200), scale(6),])
+
+    const player = add([
+        sprite('me'), solid(), scale(1.5),
+        scale(10),
+        pos(50, 0),
+        body(),
+        origin('bot')
+    ])
 
 })
 
