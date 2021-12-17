@@ -175,6 +175,7 @@ scene("game", ({ level, score }) => {
             scoreLabel.value -= 2
             scoreLabel.text = scoreLabel.value
             destroy(d)
+            camShake(4)
         }
         else {
             go('lose', {
