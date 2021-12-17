@@ -6,9 +6,11 @@ kaboom({
     clearColor: [0, 0, 0, 1],
 })
 
-const MOVE_SPEED = 240
+const MOVE_SPEED = 350
 const DANGER_SPEED = 200
 const JUMP_FORCE = 250
+const GOLD_SPEED = 250
+const RANDOM_TIME = 5 //time before gold & evil randomly change times, from 1-5. increase for easy level
 const word1 = ['fall1', 'date1', 'tie1', 'novel1']
 const word2 = ['fall2', 'date2', 'tie2', 'novel2']
 
@@ -40,11 +42,11 @@ scene("game", ({ level, score }) => {
             '$                  $',
             '$     ?            $',
             '$                  $',
-            '$   @@@     !      $',
+            '$    @@     !      $',
             '$                  $',
             '$                  $',
             '$     ^         ^  $',
-            '$         (        $',
+            '$  [              ($',
             '====================',
         ],
         [
@@ -52,7 +54,7 @@ scene("game", ({ level, score }) => {
             '$                 $',
             '$  @@@         ^  $',
             '$                 $',
-            '$   !             $',
+            '$   !      [       $',
             '$             ?   $',
             '$                 $',
             '$     ^         ^ $',
@@ -67,9 +69,9 @@ scene("game", ({ level, score }) => {
         '=': [sprite('floor'), solid(), 'wall'],
         '@': [sprite('brick'), solid(), 'wall'],
         '$': [sprite('wall'), solid(), 'wall'],
-        '^': [sprite('evil'), 'dangerous', { dir: -1 }],
+        '^': [sprite('evil'), 'dangerous', { dir: -1, timer: 0 }],
         '(': [sprite('arrow-down'), 'next-level'],
-        '[': [sprite('gold')],
+        '[': [sprite('gold'), 'gold', { dir: -1, timer: 0 }],
         '!': [sprite(choose(word1))],
         '?': [sprite(choose(word2))],
         '&': [sprite('tie3', solid())],
@@ -149,12 +151,16 @@ scene("game", ({ level, score }) => {
         player.jump(JUMP_FORCE)
         player.dir = vec2(0, -1)
     })
-    //Enemies
-
+    //ENEMIES
     action('dangerous', (d) => {
         d.move(d.dir * DANGER_SPEED, 0) //danger moving along x-asis at DANGER_SPEED
+        d.timer -= dt()
+        if (d.timer <= 0) {
+            d.dir = - d.dir
+            d.timer = rand(RANDOM_TIME)
+        }
     })
-    //enemies change direction
+
     collides('dangerous', 'wall', (d) => {
         d.dir = -d.dir
     })
@@ -162,7 +168,30 @@ scene("game", ({ level, score }) => {
     player.overlaps('dangerous', () => {
         go('lose', { score: scoreLabel.value })
     })
+
+    //GOLD
+
+    collides('gold', 'wall', (g) => {
+        g.dir = -g.dir
+    })
+
+    action('gold', (g) => {
+        g.move(0, g.dir * GOLD_SPEED)
+        g.timer -= dt()
+        if (g.timer <= 0) {
+            g.dir = - g.dir
+            g.timer = rand(RANDOM_TIME)
+        }
+    })
+
+    player.collides('gold', (g) => {
+        destroy(g)
+        scoreLabel.value++
+        scoreLabel.text = scoreLabel.value
+    })
+
 })
+
 
 scene("lose", ({ score }) => {
     add([
