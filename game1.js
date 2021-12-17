@@ -7,6 +7,7 @@ kaboom({
 })
 
 const MOVE_SPEED = 240
+const DANGER_SPEED = 300
 const word1 = ['fall1', 'date1', 'tie1', 'novel1']
 const word2 = ['fall2', 'date2', 'tie2', 'novel2']
 
@@ -34,27 +35,27 @@ scene("game", ({ level, score }) => {
     const maps = [
         [
 
-            '     !            $',
-            '                  $',
-            '      ?           $',
-            '                  $',
-            '                  $',
-            '                  $',
-            '                  $',
-            '     ^         ^  $',
-            '(                 $',
-            '======================',
+            '====================',
+            '$                  $',
+            '$     ?            $',
+            '$                  $',
+            '$           !      $',
+            '$                  $',
+            '$                  $',
+            '$     ^         ^  $',
+            '$ (                $',
+            '====================',
         ],
         [
-            '                  $',
-            '                  $',
-            '               ^  $',
-            '                  $',
-            '   !              $',
-            '             ?    $',
-            '                  $',
-            '     ^         ^  $',
-            '                 ($',
+            '==================',
+            '$                 $',
+            '$              ^  $',
+            '$                 $',
+            '$   !             $',
+            '$             ?   $',
+            '$                 $',
+            '$     ^         ^ $',
+            '$                ($',
             '===================',
         ]]
 
@@ -65,7 +66,7 @@ scene("game", ({ level, score }) => {
         '=': [sprite('floor'), solid()],
         '@': [sprite('brick'), solid()],
         '$': [sprite('wall'), solid()],
-        '^': [sprite('evil'), solid(), scale(1.5)],
+        '^': [sprite('evil'), scale(1), 'dangerous', { dir: -1 }],
         '(': [sprite('arrow-down'), 'next-level'],
         '[': [sprite('gold')],
         '!': [sprite(choose(word1))],
@@ -116,7 +117,7 @@ scene("game", ({ level, score }) => {
 
     player.overlaps('next-level', () => {
         go('game', {
-            level: (level + 1),
+            level: (level + 1) % maps.length, //%maps.length makes the maps loop
             score: scoreLabel.value
         })
     })
@@ -139,6 +140,10 @@ scene("game", ({ level, score }) => {
     keyDown('down', () => {
         player.move(0, MOVE_SPEED)
         player.dir = vec2(0, 1)
+    })
+
+    action('dangerous', (d) => {
+        d.move(d.dir * DANGER_SPEED, 0) //danger moving along x-asis at DANGER_SPEED
     })
 
 
