@@ -6,6 +6,10 @@ kaboom({
     clearColor: [0, 0, 0, 1],
 })
 
+const MOVE_SPEED = 240
+const word1 = ['fall1', 'date1', 'tie1', 'novel1']
+const word2 = ['fall2', 'date2', 'tie2', 'novel2']
+
 loadRoot('https://i.imgur.com/')
 loadSprite('tie2', 'ddxq5LU.png')
 loadSprite('tie1', '2wogbvE.png')
@@ -26,23 +30,23 @@ loadSprite('arrow-down', 'laOEupO.png')
 
 
 
-scene("game", () => {
+scene("game", ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
     const map = [
 
-        '                     $',
-        '   @@@+@@@#@@@       $',
-        '                     $',
-        '                     $',
-        '             @!@@@   $',
-        '                     $',
-        '                     $',
-        '     @@?@@@&@@       $',
-        '                     $',
-        '     ^            ^  $',
-        '==============(========',
+        '     !            $',
+        '                  $',
+        '      ?           $',
+        '                  $',
+        '                  $',
+        '                  $',
+        '                  $',
+        '     ^         ^  $',
+        '                 ($',
+        '======================',
     ]
+
 
     const levelCfg = {
         width: 100,
@@ -53,22 +57,20 @@ scene("game", () => {
         '^': [sprite('evil'), solid(), scale(1.5)],
         '(': [sprite('arrow-down'), solid()],
         '[': [sprite('gold')],
-        '!': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
-        '?': [sprite(choose(['fall1', 'date1', 'tie1', 'novel1']))],
-        '#': [sprite(choose(['fall2', 'date2', 'tie2', 'novel2']))],
-        '+': [sprite(choose(['fall2', 'date2', 'tie2', 'novel2']))],
+        '!': [sprite(choose(word1))],
+        '?': [sprite(choose(word2))],
         '&': [sprite('tie3', solid())],
     }
 
     const gameLevel = addLevel(map, levelCfg)
 
     const scoreLabel = add([
-        text('test'),
+        text('0'),
         scale(5),
         pos(2300, 400),
         layer('ui'),
         {
-            value: 'test',
+            value: score,
         }
     ])
 
@@ -77,25 +79,50 @@ scene("game", () => {
         scale(10),
         pos(200, 1300),
         layer('ui'),
-        {
-            value: 'test',
-        }
+
     ])
 
-    add([text('level ' + 'test'), pos(2300, 200), scale(6),])
+    add([text('level: ' + parseInt(level + 1)), pos(2300, 200), scale(6),])
 
     const player = add([
-        sprite('me'), solid(), scale(1.5),
-        scale(10),
-        pos(50, 0),
-        body(),
-        origin('bot')
+        sprite('me'), solid(),
+        scale(1),
+        pos(100, 100),
+        origin('bot'),
+        {
+            //right by default
+            dir: vec2(1.0)
+        }
     ])
+    player.action(() => {
+        player.resolve() //wait before starting the game
+    })
+
+    keyDown('left', () => {
+        player.move(-MOVE_SPEED, 0)
+        player.dir = vec2(-1, 0)
+    })
+
+    keyDown('right', () => {
+        player.move(MOVE_SPEED, 0)
+        player.dir = vec2(1, 0)
+    })
+
+    keyDown('up', () => {
+        player.move(0, -MOVE_SPEED)
+        player.dir = vec2(0, -1)
+    })
+
+    keyDown('down', () => {
+        player.move(0, MOVE_SPEED)
+        player.dir = vec2(0, 1)
+    })
+
 
 })
 
 
-start("game")
+start("game", { level: 0, score: 0 })
 
 //to continue
 //consider having pictures zoom past. add double jump
