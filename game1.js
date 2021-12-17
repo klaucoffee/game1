@@ -7,8 +7,8 @@ kaboom({
 })
 
 const MOVE_SPEED = 240
-const DANGER_SPEED = 300
-const JUMP_FORCE = 300
+const DANGER_SPEED = 200
+const JUMP_FORCE = 250
 const word1 = ['fall1', 'date1', 'tie1', 'novel1']
 const word2 = ['fall2', 'date2', 'tie2', 'novel2']
 
@@ -67,7 +67,7 @@ scene("game", ({ level, score }) => {
         '=': [sprite('floor'), solid(), 'wall'],
         '@': [sprite('brick'), solid(), 'wall'],
         '$': [sprite('wall'), solid(), 'wall'],
-        '^': [sprite('evil'), scale(1), 'dangerous', { dir: -1 }],
+        '^': [sprite('evil'), 'dangerous', { dir: -1 }],
         '(': [sprite('arrow-down'), 'next-level'],
         '[': [sprite('gold')],
         '!': [sprite(choose(word1))],
@@ -159,9 +159,15 @@ scene("game", ({ level, score }) => {
         d.dir = -d.dir
     })
 
-
+    player.overlaps('dangerous', () => {
+        go('lose', { score: scoreLabel.value })
+    })
 })
 
+scene("lose", ({ score }) => {
+    add([
+        text("GAME OVER" + "\n\n\n" + score, 52), origin('center'), pos(width() / 2, height() / 2)])
+})
 
 start("game", { level: 0, score: 0 })
 
