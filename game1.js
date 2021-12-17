@@ -43,10 +43,10 @@ scene("game", ({ level, score }) => {
             '$     ?            $',
             '$                  $',
             '$    @@     !      $',
-            '$                  $',
+            '$ [                 $',
             '$                  $',
             '$     ^         ^  $',
-            '$  [              ($',
+            '$  [        [      ($',
             '====================',
         ],
         [
@@ -58,7 +58,7 @@ scene("game", ({ level, score }) => {
             '$             ?   $',
             '$                 $',
             '$     ^         ^ $',
-            '$                ($',
+            '$ [               ($',
             '===================',
         ]]
 
@@ -91,7 +91,12 @@ scene("game", ({ level, score }) => {
     ])
 
     //prints level
-    add([text('level: ' + parseInt(level + 1)), pos(2300, 200), scale(6),])
+    add([
+        text('level: ' + parseInt(level + 1)),
+        pos(2300, 200),
+        layer('ui'),
+        scale(6)
+    ])
 
 
     //prints random word - bottom of screen
@@ -107,7 +112,7 @@ scene("game", ({ level, score }) => {
         sprite('me'), solid(),
         scale(1),
         pos(200, 200),
-        body(), //gravity
+        //body(), //gravity
         origin('bot'),
 
         {
@@ -147,10 +152,10 @@ scene("game", ({ level, score }) => {
         player.dir = vec2(0, 1)
     })
 
-    keyDown('space', () => {
-        player.jump(JUMP_FORCE)
-        player.dir = vec2(0, -1)
-    })
+    // keyDown('space', () => {
+    //     player.jump(JUMP_FORCE)
+    //     player.dir = vec2(0, -1)
+    // })
     //ENEMIES
     action('dangerous', (d) => {
         d.move(d.dir * DANGER_SPEED, 0) //danger moving along x-asis at DANGER_SPEED
@@ -165,8 +170,17 @@ scene("game", ({ level, score }) => {
         d.dir = -d.dir
     })
 
-    player.overlaps('dangerous', () => {
-        go('lose', { score: scoreLabel.value })
+    player.overlaps('dangerous', (d) => {
+        if (scoreLabel.value > 0) {
+            scoreLabel.value -= 2
+            scoreLabel.text = scoreLabel.value
+            destroy(d)
+        }
+        else {
+            go('lose', {
+                score: scoreLabel.value
+            })
+        }
     })
 
     //GOLD
@@ -201,4 +215,4 @@ scene("lose", ({ score }) => {
 start("game", { level: 0, score: 0 })
 
 //to continue
-//consider having pictures zoom past. add double jump
+//how to include first scene where people click button to enter?
