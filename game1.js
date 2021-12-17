@@ -28,24 +28,35 @@ loadSprite('evil', 'qVMNAmN.png')
 loadSprite('me', 'c19OsFc.png.png')
 loadSprite('arrow-down', 'laOEupO.png')
 
-
-
 scene("game", ({ level, score }) => {
     layers(['bg', 'obj', 'ui'], 'obj')
 
-    const map = [
+    const maps = [
+        [
 
-        '     !            $',
-        '                  $',
-        '      ?           $',
-        '                  $',
-        '                  $',
-        '                  $',
-        '                  $',
-        '     ^         ^  $',
-        '                 ($',
-        '======================',
-    ]
+            '     !            $',
+            '                  $',
+            '      ?           $',
+            '                  $',
+            '                  $',
+            '                  $',
+            '                  $',
+            '     ^         ^  $',
+            '(                 $',
+            '======================',
+        ],
+        [
+            '                  $',
+            '                  $',
+            '               ^  $',
+            '                  $',
+            '   !              $',
+            '             ?    $',
+            '                  $',
+            '     ^         ^  $',
+            '                 ($',
+            '===================',
+        ]]
 
 
     const levelCfg = {
@@ -55,15 +66,16 @@ scene("game", ({ level, score }) => {
         '@': [sprite('brick'), solid()],
         '$': [sprite('wall'), solid()],
         '^': [sprite('evil'), solid(), scale(1.5)],
-        '(': [sprite('arrow-down'), solid()],
+        '(': [sprite('arrow-down'), 'next-level'],
         '[': [sprite('gold')],
         '!': [sprite(choose(word1))],
         '?': [sprite(choose(word2))],
         '&': [sprite('tie3', solid())],
     }
 
-    const gameLevel = addLevel(map, levelCfg)
+    const gameLevel = addLevel(maps[level], levelCfg)
 
+    //prints score
     const scoreLabel = add([
         text('0'),
         scale(5),
@@ -74,6 +86,11 @@ scene("game", ({ level, score }) => {
         }
     ])
 
+    //prints level
+    add([text('level: ' + parseInt(level + 1)), pos(2300, 200), scale(6),])
+
+
+    //prints random word - bottom of screen
     const word = add([
         text('WORD:' + choose(['TIE', 'DATE', 'FALL', 'NOVEL'])),
         scale(10),
@@ -81,9 +98,7 @@ scene("game", ({ level, score }) => {
         layer('ui'),
 
     ])
-
-    add([text('level: ' + parseInt(level + 1)), pos(2300, 200), scale(6),])
-
+    //initializes player
     const player = add([
         sprite('me'), solid(),
         scale(1),
@@ -94,8 +109,16 @@ scene("game", ({ level, score }) => {
             dir: vec2(1.0)
         }
     ])
+    //to ensure page loads before player starts
     player.action(() => {
-        player.resolve() //wait before starting the game
+        player.resolve()
+    })
+
+    player.overlaps('next-level', () => {
+        go('game', {
+            level: (level + 1),
+            score: scoreLabel.value
+        })
     })
 
     keyDown('left', () => {
