@@ -8,6 +8,7 @@ kaboom({
 
 const MOVE_SPEED = 240
 const DANGER_SPEED = 300
+const JUMP_FORCE = 300
 const word1 = ['fall1', 'date1', 'tie1', 'novel1']
 const word2 = ['fall2', 'date2', 'tie2', 'novel2']
 
@@ -39,17 +40,17 @@ scene("game", ({ level, score }) => {
             '$                  $',
             '$     ?            $',
             '$                  $',
-            '$           !      $',
+            '$   @@@     !      $',
             '$                  $',
             '$                  $',
             '$     ^         ^  $',
-            '$ (                $',
+            '$         (        $',
             '====================',
         ],
         [
             '==================',
             '$                 $',
-            '$              ^  $',
+            '$  @@@         ^  $',
             '$                 $',
             '$   !             $',
             '$             ?   $',
@@ -63,9 +64,9 @@ scene("game", ({ level, score }) => {
     const levelCfg = {
         width: 100,
         height: 100,
-        '=': [sprite('floor'), solid()],
-        '@': [sprite('brick'), solid()],
-        '$': [sprite('wall'), solid()],
+        '=': [sprite('floor'), solid(), 'wall'],
+        '@': [sprite('brick'), solid(), 'wall'],
+        '$': [sprite('wall'), solid(), 'wall'],
         '^': [sprite('evil'), scale(1), 'dangerous', { dir: -1 }],
         '(': [sprite('arrow-down'), 'next-level'],
         '[': [sprite('gold')],
@@ -103,8 +104,10 @@ scene("game", ({ level, score }) => {
     const player = add([
         sprite('me'), solid(),
         scale(1),
-        pos(100, 100),
+        pos(200, 200),
+        body(), //gravity
         origin('bot'),
+
         {
             //right by default
             dir: vec2(1.0)
@@ -142,8 +145,18 @@ scene("game", ({ level, score }) => {
         player.dir = vec2(0, 1)
     })
 
+    keyDown('space', () => {
+        player.jump(JUMP_FORCE)
+        player.dir = vec2(0, -1)
+    })
+    //Enemies
+
     action('dangerous', (d) => {
         d.move(d.dir * DANGER_SPEED, 0) //danger moving along x-asis at DANGER_SPEED
+    })
+    //enemies change direction
+    collides('dangerous', 'wall', (d) => {
+        d.dir = -d.dir
     })
 
 
