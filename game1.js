@@ -42,21 +42,21 @@ $(() => {
   const JUMP_FORCE = 250;
   const GOLD_SPEED = 250;
   const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
-  const letterbrick1 = ["fall1", "date1", "tie1", "novel1"];
-  const letterbrick2 = ["fall2", "date2", "tie2", "novel2"];
+  const letterbrick1 = ["1", "2", "3", "4"];
+  const letterbrick2 = ["5", "6", "7", "8", "9"];
   let wordArray = [];
   //const wordArray = ["TIE", "DATE", "FALL", "NOVEL"];
 
   loadRoot("https://i.imgur.com/");
-  loadSprite("tie2", "ddxq5LU.png");
-  loadSprite("tie1", "2wogbvE.png");
-  loadSprite("tie3", "JI7AM9I.png");
-  loadSprite("novel2", "CC4Qfce.png");
-  loadSprite("novel1", "Zzi0tLe.png");
-  loadSprite("date1", "DHWMOOo.png");
-  loadSprite("date2", "5I345Tw.png");
-  loadSprite("fall2", "0IQw0ro.png");
-  loadSprite("fall1", "WCqOl0x.png");
+  loadSprite("1", "ddxq5LU.png");
+  loadSprite("2", "2wogbvE.png");
+  loadSprite("3", "JI7AM9I.png");
+  loadSprite("4", "CC4Qfce.png");
+  loadSprite("5", "Zzi0tLe.png");
+  loadSprite("6", "DHWMOOo.png");
+  loadSprite("7", "5I345Tw.png");
+  loadSprite("8", "0IQw0ro.png");
+  loadSprite("9", "WCqOl0x.png");
   loadSprite("brick", "aE5Dxen.png");
   loadSprite("floor", "QXYmhyn.png");
   loadSprite("wall", "UujO9Sp.png");
@@ -71,7 +71,7 @@ $(() => {
     const maps = [
       [
         "=================",
-        "$  3    1       $",
+        "$               $",
         "$     ?         $",
         "$               $",
         "$    @@    !    $",
@@ -106,7 +106,6 @@ $(() => {
       "[": [sprite("gold"), "gold", { dir: -1, timer: 0 }],
       "!": [sprite(choose(letterbrick1)), solid(), "letterbrick1"],
       "?": [sprite(choose(letterbrick2)), solid(), "letterbrick2"],
-      "&": [sprite("tie3", solid())],
     };
 
     const gameLevel = addLevel(maps[level], levelCfg);
@@ -237,7 +236,7 @@ $(() => {
       console.log(wordArray[wordArray.length - 1]);
       console.log(wordArray);
       const letterCollide = add([
-        text("WORD:" + wordArray),
+        text("Digits recorded:" + wordArray),
         scale(5),
         pos(200, 1000),
         layer("ui"),
@@ -249,7 +248,7 @@ $(() => {
       console.log(wordArray[wordArray.length - 1]);
       console.log(wordArray);
       const letterCollide = add([
-        text("WORD:" + wordArray),
+        text("Digits recorded:" + wordArray),
         scale(5),
         pos(200, 1000),
         layer("ui"),
