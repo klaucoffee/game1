@@ -4,20 +4,34 @@ if (typeof jQuery == "undefined") {
   console.log("I did it! I linked jQuery and this js file!");
 }
 
-$(() => {
-  //store user input for words
-  let userwordArray = [];
-  $("form").on("submit", (event) => {
-    const inputValue = $("#input-box").val();
-    event.preventDefault();
-    //console.log(inputValue);
-    $(event.currentTarget).trigger("reset");
-    const $word = $("<li>").attr("id", "word-item").text(inputValue);
-    $(".word-list").append($word);
-    userwordArray.push(inputValue);
-    console.log(userwordArray);
-  });
+//Calculate functions
+function add(num1, num2) {
+  return num1 + num2;
+}
+function subtract(num1, num2) {
+  if (num1 > num2) {
+    return num1 - num2;
+  } else {
+    return num2 - num1;
+  }
+}
+function divide(num1, num2) {
+  if (num1 > num2) {
+    return parseFloat(num1 / num2).toFixed(2);
+  } else {
+    return parseFloat(num2 / num1).toFixed(2);
+  }
+}
 
+function multiply(num1, num2) {
+  return num1 * num2;
+}
+
+function calculate(num1, num2, operates) {
+  return operates(num1, num2);
+}
+
+$(() => {
   //restart button
   $("#restart").on("click", () => {
     location.reload();
@@ -28,36 +42,6 @@ $(() => {
   $("#startgame").on("click", () => {
     start("game", { level: 0, score: 0 });
   });
-
-  //calculate button
-  $("#restart").on("click", () => {});
-
-  //Calculate functions
-  function add(num1, num2) {
-    return num1 + num2;
-  }
-  function subtract(num1, num2) {
-    if (num1 > num2) {
-      return num1 - num2;
-    } else {
-      return num2 - num1;
-    }
-  }
-  function divide(num1, num2) {
-    if (num1 > num2) {
-      return parseFloat(num1 / num2).toFixed(2);
-    } else {
-      return parseFloat(num2 / num1).toFixed(2);
-    }
-  }
-
-  function multiply(num1, num2) {
-    return num1 * num2;
-  }
-
-  function calculate(num1, num2, operates) {
-    return operates(num1, num2);
-  }
 
   kaboom({
     global: true,
@@ -72,10 +56,7 @@ $(() => {
   const JUMP_FORCE = 250;
   const GOLD_SPEED = 250;
   const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
-  const numbrick1 = 1;
-  const numbrick2 = 2;
   let numArray = [];
-  //const wordArray = ["TIE", "DATE", "FALL", "NOVEL"];
 
   //need to change URL
   loadRoot("https://i.imgur.com/");
@@ -291,6 +272,24 @@ $(() => {
     collision("7", 7);
     collision("8", 8);
     collision("9", 9);
+
+    //calculate button
+    // $("#calculate").on("click", (operation) => {
+    //   calculate(numArray[0], numArray[1], operation);
+    // });
+
+    // //store user input for words
+    // let userwordArray = [];
+    // $("form").on("submit", (event) => {
+    //   const inputValue = $("#input-box").val();
+    //   event.preventDefault();
+    //   //console.log(inputValue);
+    //   $(event.currentTarget).trigger("reset");
+    //   const $word = $("<li>").attr("id", "word-item").text(inputValue);
+    //   $(".word-list").append($word);
+    //   userwordArray.push(inputValue);
+    //   console.log(userwordArray);
+    // });
   });
 
   scene("lose", ({ score }) => {
