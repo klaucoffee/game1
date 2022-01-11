@@ -330,32 +330,36 @@ $(() => {
       return num1 * num2;
     }
 
-    function calculate(num1, num2, operates) {
-      return operates(num1, num2);
+    //function to print answer
+    function printAnswer(answer) {
+      add([
+        text("Answer: " + answer),
+        layer("ui"),
+        scale(1),
+        pos(width() / 8, height() / 4),
+      ]);
     }
 
     //calculate button
 
-    //console.log(operations);
     $("#calculate").on("click", () => {
       console.log(operations);
       switch (operations) {
         case "addition":
-          console.log(addition(numArray[0], numArray[1]));
+          printAnswer(addition(numArray[0], numArray[1]));
           break;
         case "multiplication":
-          multiplication(numArray[0], numArray[1]);
+          printAnswer(multiplication(numArray[0], numArray[1]));
           break;
         case "subtraction":
-          subtraction(numArray[0], numArray[1]);
+          printAnswer(subtraction(numArray[0], numArray[1]));
           break;
         case "division":
-          division(numArray[0], numArray[1]);
+          printAnswer(division(numArray[0], numArray[1]));
           break;
       }
-      // console.log(addition(3, 5));
-      // calculate(numArray[0], numArray[1], operations);
     });
+    //Check win condition
   });
 
   scene("lose", ({ score }) => {
