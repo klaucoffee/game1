@@ -13,11 +13,15 @@
     <button id="startgame">START GAME</button>
     <button id="calculate">CALCULATE</button>
     <form>
-      <label for="input-box">Choose the math operator</label>
-      <input type="text" name="" value="" id="input-box" />
-      <button type="submit" name="button" id="submit">ADD</button>
+      <label for="operations">Choose a Mathematical Operation</label>
+      <select id="operations">
+        <option value="Addition">Addition</option>
+        <option value="Multiplication">Multiplication</option>
+        <option value="Subtraction">Subtraction</option>
+        <option value="Division">Division</option>
+      </select>
+      <button type="submit" name="button" id="submit">Submit</button>
     </form>
-    <ul class="word-list"></ul>
   </body>
   <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
   <script src="game1.js"></script>

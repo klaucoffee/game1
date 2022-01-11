@@ -274,11 +274,25 @@ $(() => {
     collision("9", 9);
 
     //calculate button
-    // $("#calculate").on("click", (operation) => {
-    //   calculate(numArray[0], numArray[1], operation);
-    // });
+    $("#calculate").on("click", (operation) => {
+      calculate(numArray[0], numArray[1], operation);
+    });
 
-    // //store user input for words
+    //store operations from drop down selection
+    let operations = "operation";
+    $("submit").on("submit", (event) => {
+      event.preventDefault();
+      //const inputValue = $("#operations").val();
+      const inputValue = $("#operations option:selected").val();
+      console.log(inputValue);
+      // $(event.currentTarget).trigger("reset");
+      // const $word = $("<li>").attr("id", "word-item").text(inputValue);
+      // $(".word-list").append($word);
+      // userwordArray.push(inputValue);
+      // console.log(userwordArray);
+    });
+
+    //store user input for words
     // let userwordArray = [];
     // $("form").on("submit", (event) => {
     //   const inputValue = $("#input-box").val();
