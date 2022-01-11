@@ -151,13 +151,29 @@ $(() => {
     ]);
 
     //prints math operation selected
-
-    add([
-      text("Math Operation: " + operations),
-      layer("ui"),
-      scale(1),
-      pos(width() / 20, height() / 3),
-    ]);
+    switch (operations) {
+      case "addition":
+        printOperatorSymbol("+");
+        break;
+      case "multiplication":
+        printOperatorSymbol("x");
+        break;
+      case "subtraction":
+        printOperatorSymbol("-");
+        break;
+      case "division":
+        printOperatorSymbol("/");
+        break;
+    }
+    //print operator symbol
+    function printOperatorSymbol(symbol) {
+      add([
+        text(symbol),
+        layer("ui"),
+        scale(2),
+        pos(width() / 20, height() / 3),
+      ]);
+    }
 
     //print random number in the game
     add([
@@ -365,6 +381,9 @@ $(() => {
       }
     });
     //Check win condition
+    //remove GOld
+    //don't need calculate button. should auto assess that it is correct
+    //formatting
   });
 
   scene("lose", ({ score }) => {
