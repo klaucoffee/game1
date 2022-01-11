@@ -133,9 +133,9 @@ $(() => {
 
     //prints score
     const scoreLabel = add([
-      text("0"),
+      text("score: " + score),
       scale(1),
-      pos(200, 400),
+      pos(width() / 3, height() / 5),
       layer("ui"),
       {
         value: score,
@@ -161,7 +161,7 @@ $(() => {
 
     //print random number in the game
     add([
-      text("Number: " + parseInt(rand(9))),
+      text("Number: " + parseInt(rand(1, 9))),
       layer("ui"),
       scale(1),
       pos(width() / 20, height() / 4),
@@ -245,10 +245,10 @@ $(() => {
     // });
 
     player.collides("dangerous", (d) => {
-      if (scoreLabel.valie > 0) {
+      if (scoreLabel.value > 0) {
         destroy(d);
         scoreLabel.value--;
-        scoreLabel.text = scoreLabel.value;
+        scoreLabel.text = "score: " + scoreLabel.value;
       } else {
         go("lose", {
           score: scoreLabel.value,
@@ -274,16 +274,21 @@ $(() => {
     player.collides("gold", (g) => {
       destroy(g);
       scoreLabel.value++;
-      scoreLabel.text = scoreLabel.value;
+      scoreLabel.text = "score: " + scoreLabel.value;
     });
 
     //stores numbers in numArray
     function collision(num, numbrick) {
       player.collides(num, () => {
         if (numArray.length > 1) {
-          alert(
-            "you've reached maximum number of digits. Please press 'calculate' or 'restart' to continue game"
-          );
+          add([
+            text(
+              "You can only choose a maximum of 2 digits. \n Click 'restart' to try again"
+            ),
+            layer("ui"),
+            scale(1),
+            pos(width() / 4, height() / 3),
+          ]);
         } else {
           numArray.push(numbrick);
           console.log(num);
@@ -364,7 +369,7 @@ $(() => {
 
   scene("lose", ({ score }) => {
     add([
-      text("GAME OVER" + "\n\n\n" + score, 20),
+      text("GAME OVER" + "\n\n\n" + "score: " + score, 20),
       origin("center"),
       pos(width() / 2, height() / 2),
     ]);
