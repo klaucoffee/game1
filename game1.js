@@ -5,7 +5,6 @@ if (typeof jQuery == "undefined") {
 }
 
 $(() => {
-  //1st page
   //store user input for words
   let userwordArray = [];
   $("form").on("submit", (event) => {
@@ -19,15 +18,46 @@ $(() => {
     console.log(userwordArray);
   });
 
+  //restart button
   $("#restart").on("click", () => {
     location.reload();
     alert("game will restart");
   });
 
-  //second page
+  //start game button
   $("#startgame").on("click", () => {
     start("game", { level: 0, score: 0 });
   });
+
+  //calculate button
+  $("#restart").on("click", () => {});
+
+  //Calculate functions
+  function add(num1, num2) {
+    return num1 + num2;
+  }
+  function subtract(num1, num2) {
+    if (num1 > num2) {
+      return num1 - num2;
+    } else {
+      return num2 - num1;
+    }
+  }
+  function divide(num1, num2) {
+    if (num1 > num2) {
+      return parseFloat(num1 / num2).toFixed(2);
+    } else {
+      return parseFloat(num2 / num1).toFixed(2);
+    }
+  }
+
+  function multiply(num1, num2) {
+    return num1 * num2;
+  }
+
+  function calculate(num1, num2, operates) {
+    return operates(num1, num2);
+  }
 
   kaboom({
     global: true,
@@ -42,11 +72,12 @@ $(() => {
   const JUMP_FORCE = 250;
   const GOLD_SPEED = 250;
   const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
-  const letterbrick1 = ["1", "2", "3", "4"];
-  const letterbrick2 = ["5", "6", "7", "8", "9"];
-  let wordArray = [];
+  const numbrick1 = 1;
+  const numbrick2 = 2;
+  let numArray = [];
   //const wordArray = ["TIE", "DATE", "FALL", "NOVEL"];
 
+  //need to change URL
   loadRoot("https://i.imgur.com/");
   loadSprite("1", "ddxq5LU.png");
   loadSprite("2", "2wogbvE.png");
@@ -72,9 +103,9 @@ $(() => {
       [
         "=================",
         "$               $",
-        "$     ?         $",
+        "$     ?     %   $",
         "$               $",
-        "$    @@    !    $",
+        "$    @ @    !   $",
         "$ [             $",
         "$               $",
         "$     ^      ^  $",
@@ -83,7 +114,7 @@ $(() => {
       ],
       [
         "===============",
-        "$              $",
+        "$       %      $",
         "$  @@@      ^  $",
         "$              $",
         "$   !   [      $",
@@ -98,14 +129,17 @@ $(() => {
     const levelCfg = {
       width: 100,
       height: 100,
+      //need to change sprite labels
       "=": [sprite("floor"), solid(), "wall"],
       "@": [sprite("brick"), solid(), "wall"],
       $: [sprite("wall"), solid(), "wall"],
       "^": [sprite("evil"), "dangerous", { dir: -1, timer: 0 }],
       "(": [sprite("arrow-down"), "next-level"],
       "[": [sprite("gold"), "gold", { dir: -1, timer: 0 }],
-      "!": [sprite(choose(letterbrick1)), solid(), "letterbrick1"],
-      "?": [sprite(choose(letterbrick2)), solid(), "letterbrick2"],
+      "!": [sprite("1"), solid(), "1"],
+      "@": [sprite("2"), solid(), "2"],
+      "#": [sprite("3"), solid(), "3"],
+      "%": [sprite("4"), solid(), "4"],
     };
 
     const gameLevel = addLevel(maps[level], levelCfg);
@@ -227,41 +261,36 @@ $(() => {
       scoreLabel.text = scoreLabel.value;
     });
 
-    //player collides with letter
-    let randomLetter1 = choose(letterbrick1);
-    let randomLetter2 = choose(letterbrick2);
+    //stores numbers in numArray
+    function collision(num, numbrick) {
+      player.collides(num, () => {
+        if (numArray.length > 1) {
+          alert(
+            "you've reached maximum number of digits. Please press 'calculate' or 'restart' to continue game"
+          );
+        } else {
+          numArray.push(numbrick);
+          console.log(num);
 
-    player.collides("letterbrick1", () => {
-      wordArray.push(randomLetter1);
-      console.log(wordArray[wordArray.length - 1]);
-      console.log(wordArray);
-      const letterCollide = add([
-        text("Digits recorded:" + wordArray),
-        scale(5),
-        pos(200, 1000),
-        layer("ui"),
-      ]);
-    });
+          const numCollide = add([
+            text("Digits recorded:" + numArray),
+            scale(5),
+            pos(200, 1000),
+            layer("ui"),
+          ]);
+        }
+      });
+    }
 
-    player.collides("letterbrick2", () => {
-      wordArray.push(randomLetter2);
-      console.log(wordArray[wordArray.length - 1]);
-      console.log(wordArray);
-      const letterCollide = add([
-        text("Digits recorded:" + wordArray),
-        scale(5),
-        pos(200, 1000),
-        layer("ui"),
-      ]);
-    });
-
-    //prints collided letter - bottom of screen
-    //   const letterCollide = add([
-    //     text("WORD:" + choose(wordArray)),
-    //     scale(10),
-    //     pos(200, 1300),
-    //     layer("ui"),
-    //   ]);
+    collision("1", 1);
+    collision("2", 2);
+    collision("3", 3);
+    collision("4", 4);
+    collision("5", 5);
+    collision("6", 6);
+    collision("7", 7);
+    collision("8", 8);
+    collision("9", 9);
   });
 
   scene("lose", ({ score }) => {
@@ -271,7 +300,4 @@ $(() => {
       pos(width() / 2, height() / 2),
     ]);
   });
-
-  //to continue
-  //how to include first scene where people click button to enter?
 });
