@@ -21,9 +21,15 @@ $(() => {
   $("form").on("submit", (event) => {
     event.preventDefault();
     const inputValue = $("#operations :selected").val();
-    //console.log(inputValue);
+    console.log(inputValue);
     operations = inputValue;
-    $(event.currentTarget).trigger("reset");
+    alert(
+      "this game will be based on: " +
+        operations +
+        "\n" +
+        "Click Start Game to continue"
+    );
+    //$(event.currentTarget).trigger("reset");
   });
 
   //store user input for words
@@ -47,11 +53,11 @@ $(() => {
     clearColor: [0, 0, 0, 1],
   });
 
-  const MOVE_SPEED = 350;
+  const MOVE_SPEED = 150;
   const DANGER_SPEED = 100;
-  const JUMP_FORCE = 250;
-  const GOLD_SPEED = 100;
-  const RANDOM_TIME = 1; //time before gold & evil randomly change times, from 1-5. increase for easy level
+  const JUMP_FORCE = 150;
+  const GOLD_SPEED = 50;
+  const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
   let numArray = [];
 
   //need to change URL
@@ -105,6 +111,7 @@ $(() => {
     const levelCfg = {
       width: 20,
       height: 20,
+
       //need to change sprite labels
       "=": [sprite("floor"), solid(), "wall"],
       "@": [sprite("brick"), solid(), "wall"],
@@ -128,7 +135,7 @@ $(() => {
     const scoreLabel = add([
       text("0"),
       scale(1),
-      pos(800, 400),
+      pos(200, 400),
       layer("ui"),
       {
         value: score,
@@ -138,9 +145,26 @@ $(() => {
     //prints level
     add([
       text("level: " + parseInt(level + 1)),
-      pos(800, 200),
       layer("ui"),
       scale(1),
+      pos(width() / 3, height() / 4),
+    ]);
+
+    //prints math operation selected
+
+    add([
+      text("Math Operation: " + operations),
+      layer("ui"),
+      scale(1),
+      pos(width() / 20, height() / 3),
+    ]);
+
+    //print random number in the game
+    add([
+      text("Number: " + parseInt(rand(9))),
+      layer("ui"),
+      scale(1),
+      pos(width() / 20, height() / 4),
     ]);
 
     //initializes player
@@ -207,12 +231,24 @@ $(() => {
       d.dir = -d.dir;
     });
 
-    player.overlaps("dangerous", (d) => {
-      if (scoreLabel.value > 0) {
-        scoreLabel.value -= 1;
-        scoreLabel.text = scoreLabel.value;
+    // player.overlaps("dangerous", (d) => {
+    //   if (scoreLabel.value > 0) {
+    //     scoreLabel.value -= 1;
+    //     scoreLabel.text = scoreLabel.value;
+    //     destroy(d);
+    //     camShake(4);
+    //   } else {
+    //     go("lose", {
+    //       score: scoreLabel.value,
+    //     });
+    //   }
+    // });
+
+    player.collides("dangerous", (d) => {
+      if (scoreLabel.valie > 0) {
         destroy(d);
-        camShake(4);
+        scoreLabel.value--;
+        scoreLabel.text = scoreLabel.value;
       } else {
         go("lose", {
           score: scoreLabel.value,
@@ -251,11 +287,10 @@ $(() => {
         } else {
           numArray.push(numbrick);
           console.log(num);
-
           const numCollide = add([
-            text("Digits recorded:" + numArray),
+            text(numArray),
             scale(1),
-            pos(200, 500),
+            pos(width() / 16, height() / 3.5),
             layer("ui"),
           ]);
         }
@@ -325,7 +360,7 @@ $(() => {
 
   scene("lose", ({ score }) => {
     add([
-      text("GAME OVER" + "\n\n\n" + score, 52),
+      text("GAME OVER" + "\n\n\n" + score, 20),
       origin("center"),
       pos(width() / 2, height() / 2),
     ]);

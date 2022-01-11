@@ -9,3 +9,8 @@
   color: black;
   font-size: 2em;
 }
+
+canvas {
+  /*max-width: 500px;*/
+  margin: auto;
+}
