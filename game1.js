@@ -88,10 +88,10 @@ $(() => {
         "@     ?     %   @",
         "@               @",
         "@    @ @    !   @",
-        "@ [             @",
+        "@               @",
         "@               @",
         "@     ^      ^  @",
-        "@  [     [     (@",
+        "@              (@",
         "=================",
       ],
       [
@@ -99,11 +99,11 @@ $(() => {
         "@       %      @",
         "@  @@@      ^  @",
         "@              @",
-        "@   !   [      @",
+        "@   !          @",
         "@          ?   @",
         "@              @",
         "@     ^      ^ @",
-        "@ [           (@",
+        "@             (@",
         "================",
       ],
     ];
@@ -150,6 +150,11 @@ $(() => {
       pos(width() / 3, height() / 4),
     ]);
 
+    //prints blanks
+    add([text("__"), layer("ui"), scale(2), pos(width() / 24, height() / 3)]);
+
+    add([text("__"), layer("ui"), scale(2), pos(width() / 10, height() / 3)]);
+
     //prints math operation selected
     switch (operations) {
       case "addition":
@@ -171,16 +176,16 @@ $(() => {
         text(symbol),
         layer("ui"),
         scale(2),
-        pos(width() / 20, height() / 3),
+        pos(width() / 14, height() / 3),
       ]);
     }
 
     //print random number in the game
     add([
-      text("Number: " + parseInt(rand(1, 9))),
+      text(" = " + parseInt(rand(1, 9))),
       layer("ui"),
-      scale(1),
-      pos(width() / 20, height() / 4),
+      scale(2),
+      pos(width() / 8, height() / 3),
     ]);
 
     //initializes player
@@ -294,7 +299,7 @@ $(() => {
     });
 
     //stores numbers in numArray
-    function collision(num, numbrick) {
+    function collision(num, digit) {
       player.collides(num, () => {
         if (numArray.length > 1) {
           add([
@@ -305,13 +310,22 @@ $(() => {
             scale(1),
             pos(width() / 4, height() / 3),
           ]);
+        } else if (numArray.length === 0) {
+          numArray.push(digit);
+          //console.log(num);
+          add([
+            text(numArray[0]),
+            scale(2),
+            pos(width() / 24, height() / 3),
+            layer("ui"),
+          ]);
         } else {
-          numArray.push(numbrick);
-          console.log(num);
-          const numCollide = add([
-            text(numArray),
-            scale(1),
-            pos(width() / 16, height() / 3.5),
+          numArray.push(digit);
+          //console.log(num);
+          add([
+            text(numArray[1]),
+            scale(2),
+            pos(width() / 10, height() / 3),
             layer("ui"),
           ]);
         }
