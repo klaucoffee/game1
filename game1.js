@@ -43,10 +43,24 @@ $(() => {
     start("game", { level: 0, score: 0 });
   });
 
+  //store operations from drop down selection
+  let operations = "operation";
+  $("submit").on("submit", (event) => {
+    event.preventDefault();
+    //const inputValue = $("#operations").val();
+    const inputValue = $("#operations :selected").val();
+    console.log(inputValue);
+    $(event.currentTarget).trigger("reset");
+    // const $word = $("<li>").attr("id", "word-item").text(inputValue);
+    // $(".word-list").append($word);
+    // userwordArray.push(inputValue);
+    // console.log(userwordArray);
+  });
+
   kaboom({
     global: true,
     fullscreen: true,
-    scale: 0.5,
+    scale: 1,
     debug: true,
     clearColor: [0, 0, 0, 1],
   });
@@ -60,22 +74,21 @@ $(() => {
 
   //need to change URL
   loadRoot("https://i.imgur.com/");
-  loadSprite("1", "ddxq5LU.png");
-  loadSprite("2", "2wogbvE.png");
-  loadSprite("3", "JI7AM9I.png");
-  loadSprite("4", "CC4Qfce.png");
-  loadSprite("5", "Zzi0tLe.png");
-  loadSprite("6", "DHWMOOo.png");
-  loadSprite("7", "5I345Tw.png");
-  loadSprite("8", "0IQw0ro.png");
-  loadSprite("9", "WCqOl0x.png");
-  loadSprite("brick", "aE5Dxen.png");
-  loadSprite("floor", "QXYmhyn.png");
-  loadSprite("wall", "UujO9Sp.png");
-  loadSprite("gold", "P0dL3BH.png");
-  loadSprite("evil", "qVMNAmN.png");
-  loadSprite("me", "c19OsFc.png.png");
-  loadSprite("arrow-down", "laOEupO.png");
+  loadSprite("1", "MRwJ0U6.png");
+  loadSprite("2", "zTpWYGN.png");
+  loadSprite("3", "7Zkfg4d.png");
+  loadSprite("4", "wEfmxa5.png");
+  loadSprite("5", "0ATrUDp.png");
+  loadSprite("6", "M5liEl1.png");
+  loadSprite("7", "dkLjKJh.png");
+  loadSprite("8", "o6e0rZA.png");
+  loadSprite("9", "h5YZSlN.png");
+  loadSprite("brick", "s9GEIzB.png");
+  loadSprite("floor", "Gca2DBB.png");
+  loadSprite("gold", "GMu4gOf.png");
+  loadSprite("evil", "No5PqFY.png");
+  loadSprite("me", "HByYqzG.png");
+  loadSprite("arrow-down", "GFY6YOU.png");
 
   scene("game", ({ level, score }) => {
     layers(["bg", "obj", "ui"], "obj");
@@ -83,44 +96,48 @@ $(() => {
     const maps = [
       [
         "=================",
-        "$               $",
-        "$     ?     %   $",
-        "$               $",
-        "$    @ @    !   $",
-        "$ [             $",
-        "$               $",
-        "$     ^      ^  $",
-        "$  [     [     ($",
+        "@               @",
+        "@     ?     %   @",
+        "@               @",
+        "@    @ @    !   @",
+        "@ [             @",
+        "@               @",
+        "@     ^      ^  @",
+        "@  [     [     (@",
         "=================",
       ],
       [
         "===============",
-        "$       %      $",
-        "$  @@@      ^  $",
-        "$              $",
-        "$   !   [      $",
-        "$          ?   $",
-        "$              $",
-        "$     ^      ^ $",
-        "$ [           ($",
+        "@       %      @",
+        "@  @@@      ^  @",
+        "@              @",
+        "@   !   [      @",
+        "@          ?   @",
+        "@              @",
+        "@     ^      ^ @",
+        "@ [           (@",
         "================",
       ],
     ];
 
     const levelCfg = {
-      width: 100,
-      height: 100,
+      width: 50,
+      height: 50,
       //need to change sprite labels
       "=": [sprite("floor"), solid(), "wall"],
       "@": [sprite("brick"), solid(), "wall"],
-      $: [sprite("wall"), solid(), "wall"],
       "^": [sprite("evil"), "dangerous", { dir: -1, timer: 0 }],
       "(": [sprite("arrow-down"), "next-level"],
       "[": [sprite("gold"), "gold", { dir: -1, timer: 0 }],
       "!": [sprite("1"), solid(), "1"],
-      "@": [sprite("2"), solid(), "2"],
+      "|": [sprite("2"), solid(), "2"],
       "#": [sprite("3"), solid(), "3"],
       "%": [sprite("4"), solid(), "4"],
+      "&": [sprite("5"), solid(), "5"],
+      "*": [sprite("6"), solid(), "6"],
+      "+": [sprite("7"), solid(), "7"],
+      "{": [sprite("8"), solid(), "8"],
+      "}": [sprite("9"), solid(), "9"],
     };
 
     const gameLevel = addLevel(maps[level], levelCfg);
@@ -128,8 +145,8 @@ $(() => {
     //prints score
     const scoreLabel = add([
       text("0"),
-      scale(5),
-      pos(2000, 400),
+      scale(1),
+      pos(1000, 400),
       layer("ui"),
       {
         value: score,
@@ -139,9 +156,9 @@ $(() => {
     //prints level
     add([
       text("level: " + parseInt(level + 1)),
-      pos(2000, 200),
+      pos(1000, 200),
       layer("ui"),
-      scale(6),
+      scale(1),
     ]);
 
     //initializes player
@@ -255,7 +272,7 @@ $(() => {
 
           const numCollide = add([
             text("Digits recorded:" + numArray),
-            scale(5),
+            scale(1),
             pos(200, 1000),
             layer("ui"),
           ]);
@@ -276,20 +293,6 @@ $(() => {
     //calculate button
     $("#calculate").on("click", (operation) => {
       calculate(numArray[0], numArray[1], operation);
-    });
-
-    //store operations from drop down selection
-    let operations = "operation";
-    $("submit").on("submit", (event) => {
-      event.preventDefault();
-      //const inputValue = $("#operations").val();
-      const inputValue = $("#operations option:selected").val();
-      console.log(inputValue);
-      // $(event.currentTarget).trigger("reset");
-      // const $word = $("<li>").attr("id", "word-item").text(inputValue);
-      // $(".word-list").append($word);
-      // userwordArray.push(inputValue);
-      // console.log(userwordArray);
     });
 
     //store user input for words

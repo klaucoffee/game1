@@ -2,8 +2,6 @@
   margin: 0;
   overflow: 0;
   background-color: black;
-  max-width: 100vw;
-  max-height: 100vh;
 }
 
 .word-list {
