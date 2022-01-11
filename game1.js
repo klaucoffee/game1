@@ -4,33 +4,6 @@ if (typeof jQuery == "undefined") {
   console.log("I did it! I linked jQuery and this js file!");
 }
 
-//Calculate functions
-function add(num1, num2) {
-  return num1 + num2;
-}
-function subtract(num1, num2) {
-  if (num1 > num2) {
-    return num1 - num2;
-  } else {
-    return num2 - num1;
-  }
-}
-function divide(num1, num2) {
-  if (num1 > num2) {
-    return parseFloat(num1 / num2).toFixed(2);
-  } else {
-    return parseFloat(num2 / num1).toFixed(2);
-  }
-}
-
-function multiply(num1, num2) {
-  return num1 * num2;
-}
-
-function calculate(num1, num2, operates) {
-  return operates(num1, num2);
-}
-
 $(() => {
   //restart button
   $("#restart").on("click", () => {
@@ -45,17 +18,26 @@ $(() => {
 
   //store operations from drop down selection
   let operations = "operation";
-  $("submit").on("submit", (event) => {
+  $("form").on("submit", (event) => {
     event.preventDefault();
-    //const inputValue = $("#operations").val();
     const inputValue = $("#operations :selected").val();
-    console.log(inputValue);
+    //console.log(inputValue);
+    operations = inputValue;
     $(event.currentTarget).trigger("reset");
-    // const $word = $("<li>").attr("id", "word-item").text(inputValue);
-    // $(".word-list").append($word);
-    // userwordArray.push(inputValue);
-    // console.log(userwordArray);
   });
+
+  //store user input for words
+  // let userwordArray = [];
+  // $("form").on("submit", (event) => {
+  //   const inputValue = $("#input-box").val();
+  //   event.preventDefault();
+  //   console.log(inputValue);
+  //   $(event.currentTarget).trigger("reset");
+  //   const $word = $("<li>").attr("id", "word-item").text(inputValue);
+  //   $(".word-list").append($word);
+  //   userwordArray.push(inputValue);
+  //   console.log(userwordArray);
+  // });
 
   kaboom({
     global: true,
@@ -66,10 +48,10 @@ $(() => {
   });
 
   const MOVE_SPEED = 350;
-  const DANGER_SPEED = 200;
+  const DANGER_SPEED = 100;
   const JUMP_FORCE = 250;
-  const GOLD_SPEED = 250;
-  const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
+  const GOLD_SPEED = 100;
+  const RANDOM_TIME = 1; //time before gold & evil randomly change times, from 1-5. increase for easy level
   let numArray = [];
 
   //need to change URL
@@ -121,14 +103,14 @@ $(() => {
     ];
 
     const levelCfg = {
-      width: 50,
-      height: 50,
+      width: 20,
+      height: 20,
       //need to change sprite labels
       "=": [sprite("floor"), solid(), "wall"],
       "@": [sprite("brick"), solid(), "wall"],
-      "^": [sprite("evil"), "dangerous", { dir: -1, timer: 0 }],
+      "^": [sprite("evil"), solid(), "dangerous", { dir: -1, timer: 0 }],
       "(": [sprite("arrow-down"), "next-level"],
-      "[": [sprite("gold"), "gold", { dir: -1, timer: 0 }],
+      "[": [sprite("gold"), solid(), "gold", { dir: -1, timer: 0 }],
       "!": [sprite("1"), solid(), "1"],
       "|": [sprite("2"), solid(), "2"],
       "#": [sprite("3"), solid(), "3"],
@@ -146,7 +128,7 @@ $(() => {
     const scoreLabel = add([
       text("0"),
       scale(1),
-      pos(1000, 400),
+      pos(800, 400),
       layer("ui"),
       {
         value: score,
@@ -156,7 +138,7 @@ $(() => {
     //prints level
     add([
       text("level: " + parseInt(level + 1)),
-      pos(1000, 200),
+      pos(800, 200),
       layer("ui"),
       scale(1),
     ]);
@@ -166,7 +148,7 @@ $(() => {
       sprite("me"),
       solid(),
       scale(1),
-      pos(200, 200),
+      pos(100, 100),
       //body(), //gravity
       origin("bot"),
 
@@ -273,7 +255,7 @@ $(() => {
           const numCollide = add([
             text("Digits recorded:" + numArray),
             scale(1),
-            pos(200, 1000),
+            pos(200, 500),
             layer("ui"),
           ]);
         }
@@ -290,23 +272,55 @@ $(() => {
     collision("8", 8);
     collision("9", 9);
 
-    //calculate button
-    $("#calculate").on("click", (operation) => {
-      calculate(numArray[0], numArray[1], operation);
-    });
+    //Calculate functions
+    function addition(num1, num2) {
+      return num1 + num2;
+    }
+    function subtraction(num1, num2) {
+      if (num1 > num2) {
+        return num1 - num2;
+      } else {
+        return num2 - num1;
+      }
+    }
+    function division(num1, num2) {
+      if (num1 > num2) {
+        return parseFloat(num1 / num2).toFixed(2);
+      } else {
+        return parseFloat(num2 / num1).toFixed(2);
+      }
+    }
 
-    //store user input for words
-    // let userwordArray = [];
-    // $("form").on("submit", (event) => {
-    //   const inputValue = $("#input-box").val();
-    //   event.preventDefault();
-    //   //console.log(inputValue);
-    //   $(event.currentTarget).trigger("reset");
-    //   const $word = $("<li>").attr("id", "word-item").text(inputValue);
-    //   $(".word-list").append($word);
-    //   userwordArray.push(inputValue);
-    //   console.log(userwordArray);
-    // });
+    function multiplication(num1, num2) {
+      return num1 * num2;
+    }
+
+    function calculate(num1, num2, operates) {
+      return operates(num1, num2);
+    }
+
+    //calculate button
+
+    //console.log(operations);
+    $("#calculate").on("click", () => {
+      console.log(operations);
+      switch (operations) {
+        case "addition":
+          console.log(addition(numArray[0], numArray[1]));
+          break;
+        case "multiplication":
+          multiplication(numArray[0], numArray[1]);
+          break;
+        case "subtraction":
+          subtraction(numArray[0], numArray[1]);
+          break;
+        case "division":
+          division(numArray[0], numArray[1]);
+          break;
+      }
+      // console.log(addition(3, 5));
+      // calculate(numArray[0], numArray[1], operations);
+    });
   });
 
   scene("lose", ({ score }) => {
