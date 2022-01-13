@@ -189,7 +189,7 @@ $(() => {
     const levelLabel = add([
       text("level: " + level),
       scale(3.5),
-      pos(width() / 1.5, height() / 3),
+      pos(1380, 240),
       layer("ui"),
       {
         value: level,
