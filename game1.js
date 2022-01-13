@@ -97,12 +97,24 @@ $(() => {
       [
         "===============",
         "@       %      @",
-        "@  @@@      ^  @",
+        "@  @@@         @",
         "@              @",
         "@   !          @",
         "@          ?   @",
         "@              @",
-        "@     ^      ^ @",
+        "@     ^        @",
+        "@             (@",
+        "================",
+      ],
+      [
+        "===============",
+        "@       %      @",
+        "@           ^  @",
+        "@              @",
+        "@   !          @",
+        "@          ?   @",
+        "@              @",
+        "@              @",
         "@             (@",
         "================",
       ],
@@ -143,12 +155,22 @@ $(() => {
     ]);
 
     //prints level
-    add([
-      text("level: " + parseInt(level + 1)),
-      layer("ui"),
+    const levelLabel = add([
+      text("level: " + level),
       scale(1),
       pos(width() / 3, height() / 4),
+      layer("ui"),
+      {
+        value: level,
+      },
     ]);
+
+    // add([
+    //   text("level: " + parseInt(level + 1)),
+    //   layer("ui"),
+    //   scale(1),
+    //   pos(width() / 3, height() / 4),
+    // ]);
 
     //prints blanks
     add([text("__"), layer("ui"), scale(2), pos(width() / 24, height() / 3)]);
@@ -181,7 +203,8 @@ $(() => {
     }
 
     //print random number in the game
-    let modelAnswer = parseInt(rand(1, 9));
+    //let modelAnswer = parseInt(rand(1, 9));
+    let modelAnswer = 4;
     add([
       text(" = " + modelAnswer),
       layer("ui"),
@@ -211,8 +234,10 @@ $(() => {
     player.overlaps("next-level", () => {
       if (numArray.length === 2) {
         if (answer === modelAnswer) {
+          levelLabel.value++;
+          numArray.length = 0;
           go("game", {
-            level: (level + 1) % maps.length, //%maps.length makes the maps loop
+            level: levelLabel.value % maps.length, //%maps.length makes the maps loop
             score: scoreLabel.value,
           });
         }
@@ -272,6 +297,7 @@ $(() => {
       } else {
         go("lose", {
           score: scoreLabel.value,
+          level: levelLabel.value,
         });
       }
     });
@@ -406,6 +432,7 @@ $(() => {
           pos(width() / 2, height() / 2),
         ]);
       } else {
+        //HERE
         add([
           text("wrong answer" + "\n" + "please restart game"),
           origin("center"),
@@ -413,17 +440,15 @@ $(() => {
         ]);
       }
     }
-
-    //test next level error
-
-    //don't need calculate button. should auto assess that it is correct
+    //remove score
+    //lose scene when wrong answer
     //submit button for dropdown should just start the game
     //formatting
   });
 
-  scene("lose", ({ score }) => {
+  scene("lose", ({ level }) => {
     add([
-      text("GAME OVER" + "\n\n\n" + "score: " + score, 20),
+      text("GAME OVER" + "\n\n\n" + "level: " + level, 20),
       origin("center"),
       pos(width() / 2, height() / 2),
     ]);
