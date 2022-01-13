@@ -55,7 +55,7 @@ $(() => {
 
   const MOVE_SPEED = 350;
   const DANGER_SPEED = 200;
-  const HARD_DANGER_SPEED = 300;
+  const HARD_DANGER_SPEED = 250;
   const JUMP_FORCE = 150;
   const GOLD_SPEED = 50;
   const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
@@ -77,6 +77,7 @@ $(() => {
   loadSprite("floor", "qJEtCIC.png");
   loadSprite("evil1", "D3niCqI.png");
   loadSprite("evil2", "buhAo8v.png");
+  loadSprite("evil3", "Js2ekOB.png");
   loadSprite("me", "Pmdmj2L.png");
   loadSprite("arrow-down", "qsO75DZ.png");
 
@@ -118,14 +119,14 @@ $(() => {
         "@@@@@@@@@@@@@@@@@@@@@",
         "@                   @",
         "@                   @",
-        "@  !    #   &   }   @",
-        "@   ^               @",
-        "@  |    %   *   {   @",
+        "@  !   #   &   +  } @",
         "@                   @",
-        "@     =    ]   =    @",
+        "@  ]   |   %   *  { @",
+        "@                   @",
+        "@     =   [    =    @",
         "@                   @",
         "@     =        =    @",
-        "@   ^               @",
+        "@                   @",
         "@                  (@",
         "@@@@@@@@@@@@@@@@@@@@@",
       ],
@@ -133,15 +134,30 @@ $(() => {
         "@@@@@@@@@@@@@@@@@@@@@",
         "@                   @",
         "@            !      @",
-        "@    &          }   @",
+        "@    &     [    }   @",
         "@                   @",
-        "@       %       ]   @",
+        "@  +    %       ]   @",
         "@                   @",
         "@     |        =    @",
         "@                   @",
         "@     =    {    *   @",
-        "@   [          [    @",
+        "@   [               @",
         "@        #         (@",
+        "@@@@@@@@@@@@@@@@@@@@@",
+      ],
+      [
+        "@@@@@@@@@@@@@@@@@@@@@",
+        "@        |     !    @",
+        "@                %  @",
+        "@           >       @",
+        "@   #               @",
+        "@        >      ]   @",
+        "@                   @",
+        "@     }    *        @",
+        "@                +  @",
+        "@     =    {        @",
+        "@                   @",
+        "@              &   (@",
         "@@@@@@@@@@@@@@@@@@@@@",
       ],
     ];
@@ -155,6 +171,7 @@ $(() => {
       "@": [sprite("brick"), solid(), "wall"],
       "^": [sprite("evil1"), solid(), "dangerous", { dir: -1, timer: 0 }],
       "[": [sprite("evil2"), solid(), "dangerous", { dir: -1, timer: 0 }],
+      ">": [sprite("evil3"), solid(), "dangerous", { dir: -1, timer: 0 }],
       "(": [sprite("arrow-down"), "next-level"],
       "]": [sprite("0"), solid(), "0"],
       "!": [sprite("1"), solid(), "1"],
@@ -304,6 +321,9 @@ $(() => {
     // })
     //ENEMIES
     action("dangerous", (d) => {
+      if (levelLabel.value === 4) {
+        d.move(0, d.dir * HARD_DANGER_SPEED);
+      }
       if (levelLabel.value >= 2) {
         d.move(0, d.dir * DANGER_SPEED);
       } else {
