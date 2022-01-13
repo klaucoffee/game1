@@ -21,7 +21,7 @@ $(() => {
   $("form").on("submit", (event) => {
     event.preventDefault();
     const inputValue = $("#operations :selected").val();
-    console.log(inputValue);
+    //console.log(inputValue);
     operations = inputValue;
     alert(
       "this game will be based on: " +
@@ -328,6 +328,7 @@ $(() => {
             pos(width() / 10, height() / 3),
             layer("ui"),
           ]);
+          calculate(operations);
         }
       });
     }
@@ -375,9 +376,8 @@ $(() => {
       ]);
     }
 
-    //calculate button
-
-    $("#calculate").on("click", () => {
+    //calculate function
+    function calculate(operations) {
       console.log(operations);
       switch (operations) {
         case "addition":
@@ -393,10 +393,12 @@ $(() => {
           printAnswer(division(numArray[0], numArray[1]));
           break;
       }
-    });
-    //Check win condition
-    //remove GOld
+    }
+
+    //Create win condition
+
     //don't need calculate button. should auto assess that it is correct
+    //submit button for dropdown should just start the game
     //formatting
   });
 
