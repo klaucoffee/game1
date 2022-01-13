@@ -209,20 +209,18 @@ $(() => {
     });
 
     player.overlaps("next-level", () => {
-      if (answer === modelAnswer) {
-        go("game", {
-          level: (level + 1) % maps.length, //%maps.length makes the maps loop
-          score: scoreLabel.value,
-        });
+      if (numArray.length === 2) {
+        if (answer === modelAnswer) {
+          go("game", {
+            level: (level + 1) % maps.length, //%maps.length makes the maps loop
+            score: scoreLabel.value,
+          });
+        }
       } else {
         add([
-          text(
-            "You have not solved the problem" +
-              "/n" +
-              "you cannot go to the next level yet"
-          ),
+          text("Unable to proceed to next level"),
           layer("ui"),
-          scale(2),
+          scale(1),
           pos(width() / 8, height() / 3),
         ]);
       }
@@ -314,7 +312,6 @@ $(() => {
         } else if (numArray.length === 0) {
           numArray.push(digit);
           destroy(d);
-          //console.log(num);
           add([
             text(numArray[0]),
             scale(2),
@@ -417,7 +414,7 @@ $(() => {
       }
     }
 
-    //Create win condition
+    //test next level error
 
     //don't need calculate button. should auto assess that it is correct
     //submit button for dropdown should just start the game
