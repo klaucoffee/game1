@@ -432,7 +432,6 @@ $(() => {
       }
     }
 
-    //lose scene when wrong answer
     //submit button for dropdown should just start the game
     //formatting
   });
