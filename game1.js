@@ -197,9 +197,9 @@ $(() => {
     ]);
 
     //prints blanks
-    add([text("__"), layer("ui"), scale(2), pos(width() / 24, height() / 3)]);
+    add([text("__"), layer("ui"), scale(3.5), pos(vec2(1380, 360))]);
 
-    add([text("__"), layer("ui"), scale(2), pos(width() / 10, height() / 3)]);
+    add([text("__"), layer("ui"), scale(3.5), pos(vec2(1500, 360))]);
 
     //prints math operation selected
     switch (operations) {
@@ -218,29 +218,24 @@ $(() => {
     }
     //print operator symbol
     function printOperatorSymbol(symbol) {
-      add([
-        text(symbol),
-        layer("ui"),
-        scale(2),
-        pos(width() / 14, height() / 3),
-      ]);
+      add([text(symbol), layer("ui"), scale(3.5), pos(vec2(1455, 360))]);
     }
 
-    //print random number in the game
+    //print random number as modelAnswer and equal sign
     let modelAnswer = parseInt(rand(2, 9));
     //let modelAnswer = 4;
     add([
       text(" = " + modelAnswer),
       layer("ui"),
-      scale(2),
-      pos(width() / 8, height() / 3),
+      scale(3.5),
+      pos(vec2(1560, 360)),
     ]);
 
     //initializes player
     const player = add([
       sprite("me"),
       solid(),
-      scale(1),
+      scale(0.7),
       pos(100, 100),
       //body(), //gravity
       origin("bot"),
@@ -268,8 +263,8 @@ $(() => {
         add([
           text("Unable to proceed to next level"),
           layer("ui"),
-          scale(1),
-          pos(width() / 8, height() / 3),
+          scale(3.5),
+          pos(vec2(1380, 720)),
         ]);
       }
     });
@@ -325,20 +320,18 @@ $(() => {
       player.collides(num, (d) => {
         if (numArray.length > 1) {
           add([
-            text(
-              "You can only choose a maximum of 2 digits. \n Click 'restart' to try again"
-            ),
+            text("You can only choose" + "\n" + "a max of 2 digits"),
             layer("ui"),
-            scale(1),
-            pos(width() / 4, height() / 3),
+            scale(3.5),
+            pos(vec2(1380, 600)),
           ]);
         } else if (numArray.length === 0) {
           numArray.push(digit);
           destroy(d);
           add([
             text(numArray[0]),
-            scale(2),
-            pos(width() / 24, height() / 3),
+            scale(3.5),
+            pos(vec2(1390, 355)),
             layer("ui"),
           ]);
         } else {
@@ -347,8 +340,8 @@ $(() => {
           //console.log(num);
           add([
             text(numArray[1]),
-            scale(2),
-            pos(width() / 10, height() / 3),
+            scale(3.5),
+            pos(vec2(1510, 355)),
             layer("ui"),
           ]);
           calculate(operations);
@@ -397,8 +390,8 @@ $(() => {
       add([
         text("Your Answer: " + answer),
         layer("ui"),
-        scale(1),
-        pos(width() / 8, height() / 4),
+        scale(3.5),
+        pos(vec2(1380, 420)),
       ]);
     }
 
@@ -425,16 +418,16 @@ $(() => {
     function checkingAnswer(answer) {
       if (answer === modelAnswer) {
         add([
-          text("correct answer" + "\n" + "you may proceed to the next level"),
-          origin("center"),
-          pos(width() / 2, height() / 2),
+          text("correct answer" + "\n" + "go to next level"),
+          scale(3.5),
+          pos(vec2(1380, 480)),
         ]);
       } else {
         //HERE
         add([
           text("wrong answer" + "\n" + "please restart game"),
-          origin("center"),
-          pos(width() / 2, height() / 2),
+          scale(3.5),
+          pos(vec2(1380, 480)),
         ]);
       }
     }
