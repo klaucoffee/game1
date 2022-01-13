@@ -181,8 +181,7 @@ $(() => {
     }
 
     //print random number in the game
-    //let modelAnswer = parseInt(rand(1, 9));
-    let modelAnswer = 5;
+    let modelAnswer = parseInt(rand(1, 9));
     add([
       text(" = " + modelAnswer),
       layer("ui"),
@@ -210,10 +209,23 @@ $(() => {
     });
 
     player.overlaps("next-level", () => {
-      go("game", {
-        level: (level + 1) % maps.length, //%maps.length makes the maps loop
-        score: scoreLabel.value,
-      });
+      if (answer === modelAnswer) {
+        go("game", {
+          level: (level + 1) % maps.length, //%maps.length makes the maps loop
+          score: scoreLabel.value,
+        });
+      } else {
+        add([
+          text(
+            "You have not solved the problem" +
+              "/n" +
+              "you cannot go to the next level yet"
+          ),
+          layer("ui"),
+          scale(2),
+          pos(width() / 8, height() / 3),
+        ]);
+      }
     });
 
     keyDown("left", () => {
@@ -320,6 +332,8 @@ $(() => {
             layer("ui"),
           ]);
           calculate(operations);
+          printAnswer(answer);
+          checkingAnswer(answer);
         }
       });
     }
@@ -347,9 +361,9 @@ $(() => {
     }
     function division(num1, num2) {
       if (num1 > num2) {
-        return parseFloat(num1 / num2).toFixed(2);
+        return parseFloat(num1 / num2);
       } else {
-        return parseFloat(num2 / num1).toFixed(2);
+        return parseFloat(num2 / num1);
       }
     }
 
@@ -372,18 +386,17 @@ $(() => {
       console.log(operations);
       switch (operations) {
         case "addition":
-          printAnswer(addition(numArray[0], numArray[1]));
-          checkingAnswer(addition(numArray[0], numArray[1]));
+          return (answer = addition(numArray[0], numArray[1]));
           break;
-        // case "multiplication":
-        //   let answer = printAnswer(multiplication(numArray[0], numArray[1]));
-        //   break;
-        // case "subtraction":
-        //   let answer = printAnswer(subtraction(numArray[0], numArray[1]));
-        //   break;
-        // case "division":
-        //   let answer = printAnswer(division(numArray[0], numArray[1]));
-        //   break;
+        case "multiplication":
+          return (answer = multiplication(numArray[0], numArray[1]));
+          break;
+        case "subtraction":
+          return (answer = subtraction(numArray[0], numArray[1]));
+          break;
+        case "division":
+          return (answer = division(numArray[0], numArray[1]));
+          break;
       }
     }
 
