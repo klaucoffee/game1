@@ -13,7 +13,7 @@ $(() => {
 
   //start game button
   $("#startgame").on("click", () => {
-    start("game", { level: 0, score: 0 });
+    start("game", { level: 0 });
   });
 
   //store operations from drop down selection
@@ -57,8 +57,6 @@ $(() => {
   const DANGER_SPEED = 200;
   const HARD_DANGER_SPEED = 250;
   const JUMP_FORCE = 150;
-  const GOLD_SPEED = 50;
-  const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
   let numArray = [];
 
   //need to change URL
@@ -81,7 +79,7 @@ $(() => {
   loadSprite("me", "Pmdmj2L.png");
   loadSprite("arrow-down", "qsO75DZ.png");
 
-  scene("game", ({ level, score }) => {
+  scene("game", ({ level }) => {
     layers(["bg", "obj", "ui"], "obj");
 
     const maps = [
@@ -187,17 +185,6 @@ $(() => {
 
     const gameLevel = addLevel(maps[level], levelCfg);
 
-    //prints score
-    const scoreLabel = add([
-      text("score: " + score),
-      scale(1),
-      pos(width() / 3, height() / 5),
-      layer("ui"),
-      {
-        value: score,
-      },
-    ]);
-
     //prints level
     const levelLabel = add([
       text("level: " + level),
@@ -208,13 +195,6 @@ $(() => {
         value: level,
       },
     ]);
-
-    // add([
-    //   text("level: " + parseInt(level + 1)),
-    //   layer("ui"),
-    //   scale(1),
-    //   pos(width() / 3, height() / 4),
-    // ]);
 
     //prints blanks
     add([text("__"), layer("ui"), scale(2), pos(width() / 24, height() / 3)]);
@@ -282,7 +262,6 @@ $(() => {
           numArray.length = 0;
           go("game", {
             level: levelLabel.value % maps.length, //%maps.length makes the maps loop
-            score: scoreLabel.value,
           });
         }
       } else {
@@ -336,15 +315,9 @@ $(() => {
     });
 
     player.collides("dangerous", (d) => {
-      if (scoreLabel.value > 0) {
-        destroy(d);
-        scoreLabel.value--;
-        scoreLabel.text = "score: " + scoreLabel.value;
-      } else {
-        go("lose", {
-          level: levelLabel.value,
-        });
-      }
+      go("lose", {
+        level: levelLabel.value,
+      });
     });
 
     //stores numbers in numArray
@@ -465,7 +438,7 @@ $(() => {
         ]);
       }
     }
-    //remove score
+
     //lose scene when wrong answer
     //submit button for dropdown should just start the game
     //formatting
