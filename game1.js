@@ -296,7 +296,6 @@ $(() => {
         scoreLabel.text = "score: " + scoreLabel.value;
       } else {
         go("lose", {
-          score: scoreLabel.value,
           level: levelLabel.value,
         });
       }
