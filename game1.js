@@ -181,8 +181,10 @@ $(() => {
     }
 
     //print random number in the game
+    //let modelAnswer = parseInt(rand(1, 9));
+    let modelAnswer = 5;
     add([
-      text(" = " + parseInt(rand(1, 9))),
+      text(" = " + modelAnswer),
       layer("ui"),
       scale(2),
       pos(width() / 8, height() / 3),
@@ -252,19 +254,6 @@ $(() => {
       d.dir = -d.dir;
     });
 
-    // player.overlaps("dangerous", (d) => {
-    //   if (scoreLabel.value > 0) {
-    //     scoreLabel.value -= 1;
-    //     scoreLabel.text = scoreLabel.value;
-    //     destroy(d);
-    //     camShake(4);
-    //   } else {
-    //     go("lose", {
-    //       score: scoreLabel.value,
-    //     });
-    //   }
-    // });
-
     player.collides("dangerous", (d) => {
       if (scoreLabel.value > 0) {
         destroy(d);
@@ -300,7 +289,7 @@ $(() => {
 
     //stores numbers in numArray
     function collision(num, digit) {
-      player.collides(num, () => {
+      player.collides(num, (d) => {
         if (numArray.length > 1) {
           add([
             text(
@@ -312,6 +301,7 @@ $(() => {
           ]);
         } else if (numArray.length === 0) {
           numArray.push(digit);
+          destroy(d);
           //console.log(num);
           add([
             text(numArray[0]),
@@ -321,6 +311,7 @@ $(() => {
           ]);
         } else {
           numArray.push(digit);
+          destroy(d);
           //console.log(num);
           add([
             text(numArray[1]),
@@ -369,7 +360,7 @@ $(() => {
     //function to print answer
     function printAnswer(answer) {
       add([
-        text("Answer: " + answer),
+        text("Your Answer: " + answer),
         layer("ui"),
         scale(1),
         pos(width() / 8, height() / 4),
@@ -382,16 +373,34 @@ $(() => {
       switch (operations) {
         case "addition":
           printAnswer(addition(numArray[0], numArray[1]));
+          checkingAnswer(addition(numArray[0], numArray[1]));
           break;
-        case "multiplication":
-          printAnswer(multiplication(numArray[0], numArray[1]));
-          break;
-        case "subtraction":
-          printAnswer(subtraction(numArray[0], numArray[1]));
-          break;
-        case "division":
-          printAnswer(division(numArray[0], numArray[1]));
-          break;
+        // case "multiplication":
+        //   let answer = printAnswer(multiplication(numArray[0], numArray[1]));
+        //   break;
+        // case "subtraction":
+        //   let answer = printAnswer(subtraction(numArray[0], numArray[1]));
+        //   break;
+        // case "division":
+        //   let answer = printAnswer(division(numArray[0], numArray[1]));
+        //   break;
+      }
+    }
+
+    //check if answer is correct
+    function checkingAnswer(answer) {
+      if (answer === modelAnswer) {
+        add([
+          text("correct answer" + "\n" + "you may proceed to the next level"),
+          origin("center"),
+          pos(width() / 2, height() / 2),
+        ]);
+      } else {
+        add([
+          text("wrong answer" + "\n" + "please restart game"),
+          origin("center"),
+          pos(width() / 2, height() / 2),
+        ]);
       }
     }
 
