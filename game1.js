@@ -48,13 +48,14 @@ $(() => {
   kaboom({
     global: true,
     fullscreen: true,
-    scale: 1,
+    scale: 0.7,
     debug: true,
     clearColor: [0, 0, 0, 1],
   });
 
-  const MOVE_SPEED = 150;
-  const DANGER_SPEED = 100;
+  const MOVE_SPEED = 350;
+  const DANGER_SPEED = 200;
+  const HARD_DANGER_SPEED = 300;
   const JUMP_FORCE = 150;
   const GOLD_SPEED = 50;
   const RANDOM_TIME = 5; //time before gold & evil randomly change times, from 1-5. increase for easy level
@@ -62,74 +63,100 @@ $(() => {
 
   //need to change URL
   loadRoot("https://i.imgur.com/");
-  loadSprite("1", "MRwJ0U6.png");
-  loadSprite("2", "zTpWYGN.png");
-  loadSprite("3", "7Zkfg4d.png");
-  loadSprite("4", "wEfmxa5.png");
-  loadSprite("5", "0ATrUDp.png");
-  loadSprite("6", "M5liEl1.png");
-  loadSprite("7", "dkLjKJh.png");
-  loadSprite("8", "o6e0rZA.png");
-  loadSprite("9", "h5YZSlN.png");
-  loadSprite("brick", "s9GEIzB.png");
-  loadSprite("floor", "Gca2DBB.png");
-  loadSprite("gold", "GMu4gOf.png");
-  loadSprite("evil", "No5PqFY.png");
-  loadSprite("me", "HByYqzG.png");
-  loadSprite("arrow-down", "GFY6YOU.png");
+  loadSprite("0", "Gfsd8ch.png");
+  loadSprite("1", "jjFfwcT.png");
+  loadSprite("2", "Y4rR0bT.png");
+  loadSprite("3", "VSQTzs4.png");
+  loadSprite("4", "lQeFW6Q.png");
+  loadSprite("5", "9L0Dt6l.png");
+  loadSprite("6", "Oe02ThC.png");
+  loadSprite("7", "1RRH6aP.png");
+  loadSprite("8", "PKOdjlq.png");
+  loadSprite("9", "4s2Ct95.png");
+  loadSprite("brick", "AtQa3jU.png");
+  loadSprite("floor", "qJEtCIC.png");
+  loadSprite("evil1", "D3niCqI.png");
+  loadSprite("evil2", "buhAo8v.png");
+  loadSprite("me", "Pmdmj2L.png");
+  loadSprite("arrow-down", "qsO75DZ.png");
 
   scene("game", ({ level, score }) => {
     layers(["bg", "obj", "ui"], "obj");
 
     const maps = [
       [
-        "=================",
-        "@               @",
-        "@     ?     %   @",
-        "@               @",
-        "@    @ @    !   @",
-        "@               @",
-        "@               @",
-        "@     ^      ^  @",
-        "@              (@",
-        "=================",
+        "@@@@@@@@@@@@@@@@@@@@@",
+        "@         ]         @",
+        "@                   @",
+        "@  !  |   #   %  &  @",
+        "@   ^               @",
+        "@                   @",
+        "@  =  =  =  =  =  = @",
+        "@                   @",
+        "@                   @",
+        "@   *   +   {   }   @",
+        "@                   @",
+        "@                  (@",
+        "@@@@@@@@@@@@@@@@@@@@@",
       ],
       [
-        "===============",
-        "@       %      @",
-        "@  @@@         @",
-        "@              @",
-        "@   !          @",
-        "@          ?   @",
-        "@              @",
-        "@     ^        @",
-        "@             (@",
-        "================",
+        "@@@@@@@@@@@@@@@@@@@@@",
+        "@                   @",
+        "@                   @",
+        "@  !     &     }    @",
+        "@   ^               @",
+        "@  |     *     ]    @",
+        "@                   @",
+        "@  #     +     =    @",
+        "@                   @",
+        "@  %     {     =    @",
+        "@   ^               @",
+        "@                  (@",
+        "@@@@@@@@@@@@@@@@@@@@@",
       ],
       [
-        "===============",
-        "@       %      @",
-        "@           ^  @",
-        "@              @",
-        "@   !          @",
-        "@          ?   @",
-        "@              @",
-        "@              @",
-        "@             (@",
-        "================",
+        "@@@@@@@@@@@@@@@@@@@@@",
+        "@                   @",
+        "@                   @",
+        "@  !    #   &   }   @",
+        "@   ^               @",
+        "@  |    %   *   {   @",
+        "@                   @",
+        "@     =    ]   =    @",
+        "@                   @",
+        "@     =        =    @",
+        "@   ^               @",
+        "@                  (@",
+        "@@@@@@@@@@@@@@@@@@@@@",
+      ],
+      [
+        "@@@@@@@@@@@@@@@@@@@@@",
+        "@                   @",
+        "@            !      @",
+        "@    &          }   @",
+        "@                   @",
+        "@       %       ]   @",
+        "@                   @",
+        "@     |        =    @",
+        "@                   @",
+        "@     =    {    *   @",
+        "@   [          [    @",
+        "@        #         (@",
+        "@@@@@@@@@@@@@@@@@@@@@",
       ],
     ];
 
     const levelCfg = {
-      width: 20,
-      height: 20,
+      width: 60,
+      height: 60,
 
       //need to change sprite labels
       "=": [sprite("floor"), solid(), "wall"],
       "@": [sprite("brick"), solid(), "wall"],
-      "^": [sprite("evil"), solid(), "dangerous", { dir: -1, timer: 0 }],
+      "^": [sprite("evil1"), solid(), "dangerous", { dir: -1, timer: 0 }],
+      "[": [sprite("evil2"), solid(), "dangerous", { dir: -1, timer: 0 }],
       "(": [sprite("arrow-down"), "next-level"],
-      "[": [sprite("gold"), solid(), "gold", { dir: -1, timer: 0 }],
+      "]": [sprite("0"), solid(), "0"],
       "!": [sprite("1"), solid(), "1"],
       "|": [sprite("2"), solid(), "2"],
       "#": [sprite("3"), solid(), "3"],
@@ -203,8 +230,8 @@ $(() => {
     }
 
     //print random number in the game
-    //let modelAnswer = parseInt(rand(1, 9));
-    let modelAnswer = 4;
+    let modelAnswer = parseInt(rand(2, 9));
+    //let modelAnswer = 4;
     add([
       text(" = " + modelAnswer),
       layer("ui"),
@@ -277,11 +304,10 @@ $(() => {
     // })
     //ENEMIES
     action("dangerous", (d) => {
-      d.move(d.dir * DANGER_SPEED, 0); //danger moving along x-asis at DANGER_SPEED
-      d.timer -= dt();
-      if (d.timer <= 0) {
-        d.dir = -d.dir;
-        d.timer = rand(RANDOM_TIME);
+      if (levelLabel.value >= 2) {
+        d.move(0, d.dir * DANGER_SPEED);
+      } else {
+        d.move(d.dir * DANGER_SPEED, 0); //danger moving along x-asis at DANGER_SPEED
       }
     });
 
@@ -299,27 +325,6 @@ $(() => {
           level: levelLabel.value,
         });
       }
-    });
-
-    //GOLD
-
-    collides("gold", "wall", (g) => {
-      g.dir = -g.dir;
-    });
-
-    action("gold", (g) => {
-      g.move(0, g.dir * GOLD_SPEED);
-      g.timer -= dt();
-      if (g.timer <= 0) {
-        g.dir = -g.dir;
-        g.timer = rand(RANDOM_TIME);
-      }
-    });
-
-    player.collides("gold", (g) => {
-      destroy(g);
-      scoreLabel.value++;
-      scoreLabel.text = "score: " + scoreLabel.value;
     });
 
     //stores numbers in numArray
@@ -360,6 +365,7 @@ $(() => {
       });
     }
 
+    collision("0", 0);
     collision("1", 1);
     collision("2", 2);
     collision("3", 3);
