@@ -23,7 +23,7 @@ $(() => {
 
   //start game button
   $("#startgame").on("click", () => {
-    start("game", { level: 0 });
+    start("game", { level: 1 });
     $(".container").detach();
   });
 
@@ -310,10 +310,10 @@ $(() => {
     // })
     //ENEMIES
     action("dangerous", (d) => {
-      if (levelLabel.value === 4) {
+      if (levelLabel.value === 5) {
         d.move(0, d.dir * HARD_DANGER_SPEED);
       }
-      if (levelLabel.value >= 2) {
+      if (levelLabel.value >= 3) {
         d.move(0, d.dir * DANGER_SPEED);
       } else {
         d.move(d.dir * DANGER_SPEED, 0); //danger moving along x-asis at DANGER_SPEED
