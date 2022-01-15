@@ -24,6 +24,7 @@ $(() => {
   //start game button
   $("#startgame").on("click", () => {
     start("game", { level: 0 });
+    $(".container").detach();
   });
 
   //store operations from drop down selection
@@ -275,7 +276,7 @@ $(() => {
         });
       } else {
         add([
-          text("Unable to proceed to next level"),
+          text("Unable to go to next level"),
           layer("ui"),
           scale(3.5),
           pos(vec2(1380, 720)),
@@ -381,18 +382,10 @@ $(() => {
       return num1 + num2;
     }
     function subtraction(num1, num2) {
-      if (num1 > num2) {
-        return num1 - num2;
-      } else {
-        return num2 - num1;
-      }
+      return num1 - num2;
     }
     function division(num1, num2) {
-      if (num1 > num2) {
-        return parseFloat(num1 / num2);
-      } else {
-        return parseFloat(num2 / num1);
-      }
+      return num1 / num2;
     }
 
     function multiplication(num1, num2) {
@@ -459,7 +452,7 @@ $(() => {
     add([
       text("GAME OVER" + "\n\n\n" + "level: " + level, 20),
       origin("center"),
-      pos(width() / 2, height() / 2),
+      pos(width() / 2.5, height() / 2.5),
     ]);
   });
 });
