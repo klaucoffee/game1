@@ -3,28 +3,13 @@ if (typeof jQuery == "undefined") {
 } else {
   console.log("I did it! I linked jQuery and this js file!");
 }
-//hide restart buttons
-$("#restart").hide();
-$("#restartlose").hide();
-console.log(window.innerWidth);
-console.log(window.innerHeight);
+
 $(() => {
-  //restart button
-
-  $("#restart").on("click", () => {
-    location.reload();
-    alert("game will restart");
-  });
-
-  $("#restartlose").on("click", () => {
-    location.reload();
-    alert("game will restart");
-  });
-
   //start game button
   $("#startgame").on("click", () => {
     start("game", { level: 1 });
     $(".container").detach();
+    $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
   });
 
   //store operations from drop down selection
@@ -42,19 +27,6 @@ $(() => {
     );
     //$(event.currentTarget).trigger("reset");
   });
-
-  //store user input for words
-  // let userwordArray = [];
-  // $("form").on("submit", (event) => {
-  //   const inputValue = $("#input-box").val();
-  //   event.preventDefault();
-  //   console.log(inputValue);
-  //   $(event.currentTarget).trigger("reset");
-  //   const $word = $("<li>").attr("id", "word-item").text(inputValue);
-  //   $(".word-list").append($word);
-  //   userwordArray.push(inputValue);
-  //   console.log(userwordArray);
-  // });
 
   kaboom({
     global: true,
@@ -91,10 +63,11 @@ $(() => {
   loadSprite("arrow-down", "qsO75DZ.png");
 
   scene("game", ({ level }) => {
-    //show restart button once game starts
-    $("#restart").show();
-    //hide start game button once game starts
-    //$("#startgame").hide();
+    $("#restart").on("click", () => {
+      location.reload();
+      alert("game will restart");
+    });
+
     $("#operations").hide();
     $("#submit").hide();
     layers(["bg", "obj", "ui"], "obj");
@@ -448,7 +421,15 @@ $(() => {
 
   scene("lose", ({ level }) => {
     $("#restart").hide();
-    $("#restartlose").show();
+    $(".bottom").append(
+      $("<button>RESTART</button>").attr("id", "restartlose")
+    );
+
+    $("#restartlose").on("click", () => {
+      location.reload();
+      alert("game will restart");
+    });
+
     add([
       text("GAME OVER" + "\n\n\n" + "level: " + level, 20),
       origin("center"),

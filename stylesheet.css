@@ -15,8 +15,13 @@ canvas {
   padding: 100px;
   background-color: black;
 }
+#operations,
+#submit {
+  font-family: monospace;
+}
 
 form {
+  font-family: monospace;
   background-color: black;
   margin: auto;
   width: 300px;
@@ -29,15 +34,20 @@ form {
 }
 
 #restartlose {
+  font-family: monospace;
+  color: hotpink;
+  background-color: black;
+  border: solid 1px white;
   margin: auto;
   width: 100px;
   height: 50px;
   top: 520px;
-  left: 570px;
+  left: 670px;
   position: absolute;
 }
 
 #startgame {
+  font-family: monospace;
   margin: auto;
   width: 100px;
   height: 50px;
@@ -49,7 +59,7 @@ form {
 
 #advice {
   background-color: black;
-  color: pink;
+  color: hotpink;
   margin: auto;
   width: 500px;
   height: 50px;
@@ -61,7 +71,7 @@ form {
   text-align: center;
 }
 #instructions {
-  color: pink;
+  color: hotpink;
   display: flex;
   flex-direction: row;
   margin: auto;
@@ -71,12 +81,12 @@ form {
   left: 50%;
   position: fixed;
   margin-top: 80px;
-  margin-left: -260px;
+  margin-left: -255px;
   text-align: center;
 }
 
 h1 {
-  color: pink;
+  color: hotpink;
   display: flex;
   flex-direction: row;
   margin: auto;
@@ -90,8 +100,10 @@ h1 {
 }
 
 #restart {
+  font-family: monospace;
   color: hotpink;
-  background-color: white;
+  background-color: black;
+  border: solid 1px white;
   width: 100px;
   height: 50px;
   position: absolute;
