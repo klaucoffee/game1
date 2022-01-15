@@ -3,10 +3,18 @@ if (typeof jQuery == "undefined") {
 } else {
   console.log("I did it! I linked jQuery and this js file!");
 }
-
+//hide restart buttons
+$("#restart").hide();
+$("#restartlose").hide();
 $(() => {
   //restart button
+
   $("#restart").on("click", () => {
+    location.reload();
+    alert("game will restart");
+  });
+
+  $("#restartlose").on("click", () => {
     location.reload();
     alert("game will restart");
   });
@@ -80,6 +88,12 @@ $(() => {
   loadSprite("arrow-down", "qsO75DZ.png");
 
   scene("game", ({ level }) => {
+    //show restart button once game starts
+    $("#restart").show();
+    //hide start game button once game starts
+    $("#startgame").hide();
+    $("#operations").hide();
+    $("#submit").hide();
     layers(["bg", "obj", "ui"], "obj");
 
     const maps = [
@@ -251,14 +265,12 @@ $(() => {
     });
 
     player.overlaps("next-level", () => {
-      if (numArray.length === 2) {
-        if (answer === modelAnswer) {
-          levelLabel.value++;
-          numArray.length = 0;
-          go("game", {
-            level: levelLabel.value % maps.length, //%maps.length makes the maps loop
-          });
-        }
+      if (numArray.length === 2 && answer === modelAnswer) {
+        levelLabel.value++;
+        numArray.length = 0;
+        go("game", {
+          level: levelLabel.value % maps.length, //%maps.length makes the maps loop
+        });
       } else {
         add([
           text("Unable to proceed to next level"),
@@ -433,10 +445,15 @@ $(() => {
     }
 
     //submit button for dropdown should just start the game
+    //buttons separate into pages
     //formatting
+    //negative numbers
+    //where to put functions (before / after document ready function)
   });
 
   scene("lose", ({ level }) => {
+    $("#restart").hide();
+    $("#restartlose").show();
     add([
       text("GAME OVER" + "\n\n\n" + "level: " + level, 20),
       origin("center"),
