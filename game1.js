@@ -6,6 +6,8 @@ if (typeof jQuery == "undefined") {
 //hide restart buttons
 $("#restart").hide();
 $("#restartlose").hide();
+console.log(window.innerWidth);
+console.log(window.innerHeight);
 $(() => {
   //restart button
 
@@ -91,7 +93,7 @@ $(() => {
     //show restart button once game starts
     $("#restart").show();
     //hide start game button once game starts
-    $("#startgame").hide();
+    //$("#startgame").hide();
     $("#operations").hide();
     $("#submit").hide();
     layers(["bg", "obj", "ui"], "obj");

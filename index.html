@@ -9,26 +9,22 @@
   </head>
 
   <body>
-    <button id="restart">RESTART</button>
-    <button id="restartlose">RESTART</button>
-    <button id="startgame">START GAME</button>
-    <!-- <form>
-      <label for="input-box">Choose the math operator</label>
-      <input type="text" name="" value="" id="input-box" />
-      <button type="submit" name="button" id="submit">ADD</button>
-    </form>
-    <ul class="word-list"></ul> -->
-    <form>
-      <label for="operations">Choose a Mathematical Operation</label>
-      <select id="operations">
-        <option value="addition">Select the Mathematical Operation:</option>
-        <option value="addition">addition</option>
-        <option value="multiplication">multiplication</option>
-        <option value="subtraction">subtraction</option>
-        <option value="division">division</option>
-      </select>
-      <button type="submit" name="button" id="submit">Submit</button>
-    </form>
+    <div class="container">
+      <button id="restart">RESTART</button>
+      <button id="restartlose">RESTART</button>
+      <form>
+        <label for="operations"></label>
+        <select id="operations">
+          <option value="select">Select the Mathematical Operation:</option>
+          <option value="addition">addition</option>
+          <option value="multiplication">multiplication</option>
+          <option value="subtraction">subtraction</option>
+          <option value="division">division</option>
+        </select>
+        <button type="submit" name="button" id="submit">Submit</button>
+      </form>
+      <button id="startgame">START GAME</button>
+    </div>
   </body>
   <script src="https://kaboomjs.com/lib/0.5.0/kaboom.js"></script>
   <script src="game1.js"></script>
