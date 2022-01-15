@@ -3,26 +3,78 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: black;
 }
 
 canvas {
   margin: auto;
 }
 
-form {
-  display: flex;
-  flex-direction: row;
+form,
+#restartlose {
+  background-color: black;
   margin: auto;
   width: 300px;
   height: 50px;
   top: 50%;
   left: 50%;
   position: fixed;
-  margin-top: -25px;
-  margin-left: -150px;
+  margin-top: -50px;
+  margin-left: -140px;
 }
 
 #startgame {
+  margin: auto;
+  width: 100px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  margin-left: -35px;
+}
+
+#advice {
+  background-color: black;
+  color: pink;
+  margin: auto;
+  width: 500px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  margin-top: -100px;
+  margin-left: -190px;
+}
+#instructions {
+  color: pink;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  max-width: 500px;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  position: fixed;
+  margin-top: 80px;
+  margin-left: -220px;
+  text-align: center;
+}
+
+h1 {
+  color: pink;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  max-width: 500px;
+  height: 50px;
+  left: 50%;
+  top: 50%;
+  position: fixed;
+  margin-top: -200px;
+  margin-left: -220px;
+}
+
+#restart {
   color: hotpink;
   background-color: white;
   margin: auto;
@@ -31,26 +83,6 @@ form {
   top: 50%;
   left: 50%;
   position: fixed;
-  margin-top: -100px;
-  margin-left: -50px;
+  margin-top: -50px;
+  margin-left: -1300px;
 }
-/*
-#operations,
-#restartlose {
-  margin: 0 auto;
-  width: 300px;
-  height: 50px;
-}
-
-#submit {
-  margin: 0 auto;
-  width: 100px;
-  height: 50px;
-}
-
-#startgame {
-  margin: 0 auto;
-  width: 100px;
-  height: 50px;
-}
-*/

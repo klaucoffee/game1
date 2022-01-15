@@ -446,11 +446,11 @@ $(() => {
       }
     }
 
-    //submit button for dropdown should just start the game
-    //buttons separate into pages
     //formatting
     //negative numbers
     //where to put functions (before / after document ready function)
+    //after level 5
+    //readme
   });
 
   scene("lose", ({ level }) => {
