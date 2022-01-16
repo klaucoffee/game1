@@ -7,9 +7,7 @@ if (typeof jQuery == "undefined") {
 $(() => {
   //start game button
   $("#startgame").on("click", () => {
-    start("game", { level: 0 });
-    $(".container").detach();
-    $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
+    alert("You must choose a Math Operation first");
   });
 
   //store operations from drop down selection
@@ -25,6 +23,12 @@ $(() => {
         "\n" +
         "Click Start Game to continue"
     );
+
+    $("#startgame").on("click", () => {
+      start("game", { level: 0 });
+      $(".container").detach();
+      $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
+    });
   });
 
   kaboom({
