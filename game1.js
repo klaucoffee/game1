@@ -7,7 +7,7 @@ if (typeof jQuery == "undefined") {
 $(() => {
   //start game button
   $("#startgame").on("click", () => {
-    start("game", { level: 1 });
+    start("game", { level: 0 });
     $(".container").detach();
     $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
   });
@@ -25,7 +25,6 @@ $(() => {
         "\n" +
         "Click Start Game to continue"
     );
-    //$(event.currentTarget).trigger("reset");
   });
 
   kaboom({
@@ -241,11 +240,17 @@ $(() => {
     });
 
     player.overlaps("next-level", () => {
-      if (numArray.length === 2 && answer === modelAnswer) {
+      if (levelLabel.value > 4) {
+        console.log(levelLabel.value);
+        go("win", {
+          level: levelLabel.value,
+        });
+      } else if (numArray.length === 2 && answer === modelAnswer) {
+        console.log(maps.length);
         levelLabel.value++;
         numArray.length = 0;
         go("game", {
-          level: levelLabel.value % maps.length, //%maps.length makes the maps loop
+          level: levelLabel.value,
         });
       } else {
         add([
@@ -283,10 +288,10 @@ $(() => {
     // })
     //ENEMIES
     action("dangerous", (d) => {
-      if (levelLabel.value === 5) {
+      if (levelLabel.value === 4) {
         d.move(0, d.dir * HARD_DANGER_SPEED);
       }
-      if (levelLabel.value >= 3) {
+      if (levelLabel.value >= 2) {
         d.move(0, d.dir * DANGER_SPEED);
       } else {
         d.move(d.dir * DANGER_SPEED, 0); //danger moving along x-asis at DANGER_SPEED
@@ -412,8 +417,6 @@ $(() => {
       }
     }
 
-    //formatting
-    //negative numbers
     //where to put functions (before / after document ready function)
     //after level 5
     //readme
@@ -432,6 +435,24 @@ $(() => {
 
     add([
       text("GAME OVER" + "\n\n\n" + "level: " + level, 20),
+      origin("center"),
+      pos(width() / 2.5, height() / 2.5),
+    ]);
+  });
+
+  scene("win", ({ level }) => {
+    $("#restart").hide();
+    $(".bottom").append(
+      $("<button>RESTART</button>").attr("id", "restartlose")
+    );
+
+    $("#restartlose").on("click", () => {
+      location.reload();
+      alert("game will restart");
+    });
+
+    add([
+      text("You completed the game!" + "\n\n\n" + "You are a MATH WHIZ!", 20),
       origin("center"),
       pos(width() / 2.5, height() / 2.5),
     ]);
