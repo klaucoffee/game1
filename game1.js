@@ -5,11 +5,6 @@ if (typeof jQuery == "undefined") {
 }
 
 $(() => {
-  //start game button
-  $("#startgame").on("click", () => {
-    alert("You must choose a Math Operation first");
-  });
-
   //store operations from drop down selection
   let operations = "operation";
   $("form").on("submit", (event) => {
@@ -23,12 +18,17 @@ $(() => {
         "\n" +
         "Click Start Game to continue"
     );
+  });
 
-    $("#startgame").on("click", () => {
+  //start game button
+  $("#startgame").on("click", () => {
+    if (operations === "operation") {
+      alert("You must choose a Math Operation first");
+    } else {
       start("game", { level: 0 });
       $(".container").detach();
       $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
-    });
+    }
   });
 
   kaboom({
