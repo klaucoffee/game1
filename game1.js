@@ -35,7 +35,7 @@ $(() => {
     clearColor: [0, 0, 0, 1],
   });
 
-  const MOVE_SPEED = 350;
+  const MOVE_SPEED = 450;
   const DANGER_SPEED = 200;
   const HARD_DANGER_SPEED = 250;
   const JUMP_FORCE = 150;
@@ -64,7 +64,7 @@ $(() => {
   scene("game", ({ level }) => {
     $("#restart").on("click", () => {
       location.reload();
-      alert("game will restart");
+      //alert("game will restart");
     });
 
     $("#operations").hide();
@@ -240,14 +240,14 @@ $(() => {
     });
 
     player.overlaps("next-level", () => {
-      if (levelLabel.value > 4) {
+      if (levelLabel.value >= 4) {
         console.log(levelLabel.value);
         go("win", {
           level: levelLabel.value,
         });
       } else if (numArray.length === 2 && answer === modelAnswer) {
-        console.log(maps.length);
         levelLabel.value++;
+        console.log(levelLabel.value);
         numArray.length = 0;
         go("game", {
           level: levelLabel.value,
