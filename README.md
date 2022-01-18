@@ -8,7 +8,7 @@ Math Keeper is a game targeted at children from ages 5 to 8 (this is the typical
 - javascript
 - HTML
 - CSS
-- Kaboom
+- Kaboom.js
 
 ### Approach Taken
 The game mechanics of Math Keeper are built using functions in the Kaboom library (version 0.5.0) and javascript.
@@ -52,3 +52,6 @@ Tip 2: Collect the numbers in the right sequence to make the equation correct. I
 
 ##Installation instructions
 git clone this repo
+
+##Game restrictions
+Math Keeper is best played on browser window sizes 1024 x 768
