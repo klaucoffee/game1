@@ -48,7 +48,7 @@ $(() => {
   const MOVE_SPEED = 450;
   const DANGER_SPEED = 200;
   const HARD_DANGER_SPEED = 250;
-  const JUMP_FORCE = 150;
+  //const JUMP_FORCE = 150;
   let numArray = [];
 
   //need to change URL
@@ -74,7 +74,6 @@ $(() => {
   scene("game", ({ level }) => {
     $("#restart").on("click", () => {
       location.reload();
-      //alert("game will restart");
     });
 
     $("#operations").hide();
@@ -277,6 +276,16 @@ $(() => {
         ]);
       }
     });
+
+    //last level message
+    if (levelLabel.value === 4) {
+      add([
+        text("Final boss level! Clear this to win the game"),
+        layer("ui"),
+        scale(3.5),
+        pos(vec2(350, 840)),
+      ]);
+    }
 
     keyDown("left", () => {
       player.move(-MOVE_SPEED, 0);
