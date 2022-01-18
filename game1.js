@@ -5,6 +5,7 @@ if (typeof jQuery == "undefined") {
 }
 
 $(() => {
+  //DOM MANIPULATION
   //store operations from drop down selection
   let operations = "operation";
   $("form").on("submit", (event) => {
@@ -20,6 +21,7 @@ $(() => {
     );
   });
 
+  //DOM MANIPULATION - detach container, append restart btn
   //start game button
   $("#startgame").on("click", () => {
     if (operations === "operation") {
@@ -30,7 +32,7 @@ $(() => {
       $(".bottom").append($("<button>RESTART</button>").attr("id", "restart"));
     }
   });
-
+  //Start of Kaboom
   kaboom({
     global: true,
     fullscreen: true,
@@ -286,10 +288,6 @@ $(() => {
       player.dir = vec2(0, 1);
     });
 
-    // keyDown('space', () => {
-    //     player.jump(JUMP_FORCE)
-    //     player.dir = vec2(0, -1)
-    // })
     //ENEMIES
     action("dangerous", (d) => {
       if (levelLabel.value === 4) {
@@ -420,12 +418,8 @@ $(() => {
         ]);
       }
     }
-
-    //where to put functions (before / after document ready function)
-    //after level 5
-    //readme
   });
-
+  //DOM manipulation
   scene("lose", ({ level }) => {
     $("#restart").hide();
     $(".bottom").append(
