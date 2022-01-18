@@ -17,7 +17,7 @@ The Welcome page is designed with CSS.
 
 The drop-down form, start and restart buttons make use of jQuery.
 
-Sprites are self-drawn (60x60 px) and hosted on [my imgur](https://krystlelau9011.imgur.com/all)
+Sprites are self-drawn (60x60 px)
 
 There are 5 levels to the game, from level 0 to level 4. Each level map is designed differently. In levels 0 and 1, the numbers are arranged in ascending order. From levels 2 to 4, the numbers are not arranged in any particular order and are distributed all over the gameplay area.
 
@@ -51,7 +51,8 @@ Tip 2: Collect the numbers in the right sequence to make the equation correct. I
 <img width="1098" alt="Screenshot 2022-01-18 at 8 34 13 PM" src="https://user-images.githubusercontent.com/31529132/149939916-243e3123-4e43-47be-b891-03cafbe6d058.png">
 
 ## Installation instructions
-git clone this repo
+git clone this repo OR\ 
+Download the code and open on an IDE
 
 ## Game restrictions
 Math Keeper is best played on browser window sizes 1024 x 768
