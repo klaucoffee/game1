@@ -13,12 +13,16 @@ $(() => {
     const inputValue = $("#operations :selected").val();
     //console.log(inputValue);
     operations = inputValue;
-    alert(
-      "this game will be based on: " +
-        operations +
-        "\n" +
-        "Click Start Game to continue"
-    );
+    if (operations === "select") {
+      alert("You must choose a Math Operation first");
+    } else {
+      alert(
+        "this game will be based on: " +
+          operations +
+          "\n" +
+          "Click Start Game to continue"
+      );
+    }
   });
 
   //DOM MANIPULATION - detach container, append restart btn
@@ -164,7 +168,13 @@ $(() => {
       "@": [sprite("brick"), solid(), "wall"],
       "^": [sprite("evil1"), solid(), "dangerous", { dir: -1, timer: 0 }],
       "[": [sprite("evil2"), solid(), "dangerous", { dir: -1, timer: 0 }],
-      ">": [sprite("evil3"), solid(), "dangerous", { dir: -1, timer: 0 }],
+      ">": [
+        sprite("evil3"),
+        scale(1.5),
+        solid(),
+        "dangerous",
+        { dir: -1, timer: 0 },
+      ],
       "(": [sprite("arrow-down"), "next-level"],
       "]": [sprite("0"), solid(), "0"],
       "!": [sprite("1"), solid(), "1"],
