@@ -50,8 +50,8 @@ Tip 2: Collect the numbers in the right sequence to make the equation correct. I
 
 <img width="1098" alt="Screenshot 2022-01-18 at 8 34 13 PM" src="https://user-images.githubusercontent.com/31529132/149939916-243e3123-4e43-47be-b891-03cafbe6d058.png">
 
-##Installation instructions
+## Installation instructions
 git clone this repo
 
-##Game restrictions
+## Game restrictions
 Math Keeper is best played on browser window sizes 1024 x 768
