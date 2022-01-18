@@ -11,11 +11,17 @@ Math Keeper is a game targeted at children from ages 5 to 8 (this is the typical
 - Kaboom
 
 ### Approach Taken
-The game mechanics of Math Keeper was built using functions in the Kaboom library (version 0.5.0) and javascript.
+The game mechanics of Math Keeper are built using functions in the Kaboom library (version 0.5.0) and javascript.
 
-The Welcome page was designed with CSS.
+The Welcome page is designed with CSS.
 
-The form, start and restart buttons make use of jQuery.
+The drop-down form, start and restart buttons make use of jQuery.
+
+Sprites are self-drawn (60x60 px) and hosted on [my imgur](https://krystlelau9011.imgur.com/all)
+
+There are 5 levels to the game, from level 0 to level 4. Each level map is designed differently. In levels 0 and 1, the numbers are arranged in ascending order. From levels 2 to 4, the numbers are not arranged in any particular order and are distributed all over the gameplay area.
+
+As the player gets to the higher levels, the enemies' movements are different, and the speed of the enemies increases.
 
 ## Link to live site
 https://klaucoffee.github.io/game1/
@@ -34,7 +40,7 @@ Step 5: When your math equation is correct, you can proceed to the next level.
 
 ### How to win
 Complete all 5 levels to win and be given the title of 'Math Whiz'!
-
+<img width="856" alt="Screenshot 2022-01-18 at 8 53 07 PM" src="https://user-images.githubusercontent.com/31529132/149941667-ca815dc5-b339-4ce7-a43e-c15657fef552.png">
 
 ### How to avoid losing
 Tip 1: Avoid the enemies; Colliding in the enemies will result in an immediate 'Game Over'
@@ -43,8 +49,5 @@ Tip 1: Avoid the enemies; Colliding in the enemies will result in an immediate '
 Tip 2: Collect the numbers in the right sequence to make the equation correct. If your answer is wrong, you will have to restart the game and try again\(Psst...don't give up! Keep trying!)
 
 <img width="1098" alt="Screenshot 2022-01-18 at 8 34 13 PM" src="https://user-images.githubusercontent.com/31529132/149939916-243e3123-4e43-47be-b891-03cafbe6d058.png">
-
-
-## Possible Future developments
 
 
